@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Defilanthropy — A thesis on what giving could become</title>
+<meta name="description" content="Defilanthropy is a thesis for rebuilding nonprofit finance on open, transparent infrastructure. Treasury yield, donor-powered pools, and AI-directed giving — explored publicly.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink: #0f1614;
+    --ink-soft: #1a2320;
+    --ink-card: #151d1a;
+    --cream: #f4efe6;
+    --cream-dim: #ddd5c6;
+    --rule: #2a3330;
+    --accent: #d97757;
+    --accent-bright: #e8896a;
+    --muted: #8a948f;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--cream);
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 300;
+    line-height: 1.5;
+    min-height: 100vh;
+    overflow-x: hidden;
+    font-feature-settings: "ss01", "ss02";
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.35;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.4'/%3E%3C/svg%3E");
+    mix-blend-mode: overlay;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.75rem 2.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(15,22,20,0.9) 0%, rgba(15,22,20,0) 100%);
+    backdrop-filter: blur(4px);
+  }
+
+  .logo {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 1.35rem;
+    letter-spacing: -0.02em;
+    font-style: italic;
+  }
+
+  .logo span { color: var(--accent); font-style: normal; font-weight: 400; }
+
+  nav .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  nav .tag::before {
+    content: '●';
+    color: var(--accent);
+    margin-right: 0.5rem;
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    padding: 9rem 2.5rem 5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease-out 0.2s forwards;
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 2.5rem;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.75rem, 6.5vw, 6rem);
+    line-height: 0.95;
+    font-weight: 300;
+    letter-spacing: -0.035em;
+    margin-bottom: 2.5rem;
+    max-width: 22ch;
+    opacity: 0;
+    animation: fadeUp 1s ease-out 0.35s forwards;
+  }
+
+  h1 em { font-style: italic; font-weight: 300; color: var(--accent); }
+
+  .hero-body {
+    font-size: 1.25rem;
+    color: var(--cream-dim);
+    max-width: 42rem;
+    margin-bottom: 3rem;
+    font-weight: 300;
+    line-height: 1.55;
+    opacity: 0;
+    animation: fadeUp 1s ease-out 0.5s forwards;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .cta-row {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 1s ease-out 0.7s forwards;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: var(--ink);
+    padding: 1.1rem 1.85rem;
+    border: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 1px;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-bright);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px -10px rgba(217, 119, 87, 0.5);
+  }
+
+  .btn-primary .arrow { transition: transform 0.3s ease; }
+  .btn-primary:hover .arrow { transform: translateX(4px); }
+
+  .btn-secondary {
+    color: var(--cream-dim);
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 0.25rem;
+    transition: all 0.3s ease;
+  }
+
+  .btn-secondary:hover { color: var(--accent); border-color: var(--accent); }
+
+  .hero-meta {
+    margin-top: 5rem;
+    display: flex;
+    gap: 3rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 1s ease-out 0.9s forwards;
+    flex-wrap: wrap;
+  }
+
+  .hero-meta span { color: var(--accent); }
+
+  /* SECTION SHELL */
+  .section {
+    padding: 8rem 2.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    border-top: 1px solid var(--rule);
+    position: relative;
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::before { color: var(--accent); }
+  .section-label.s01::before { content: '§ 01'; }
+  .section-label.s02::before { content: '§ 02'; }
+  .section-label.s03::before { content: '§ 03'; }
+  .section-label.s04::before { content: '§ 04'; }
+  .section-label.s05::before { content: '§ 05'; }
+
+  .big-text {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.85rem, 3.4vw, 3rem);
+    line-height: 1.2;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    max-width: 58rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .big-text em { font-style: italic; color: var(--accent); }
+
+  .body-sub {
+    font-size: 1.05rem;
+    color: var(--cream-dim);
+    max-width: 44rem;
+    line-height: 1.65;
+  }
+
+  .body-sub + .body-sub { margin-top: 1.25rem; }
+
+  /* PILLARS */
+  .pillars-intro {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 4rem;
+    margin-bottom: 5rem;
+    align-items: end;
+  }
+
+  .pillars-intro h2 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2rem, 3.6vw, 3.25rem);
+    line-height: 1.05;
+    font-weight: 300;
+    letter-spacing: -0.03em;
+  }
+
+  .pillars-intro h2 em { font-style: italic; color: var(--accent); }
+
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .pillar {
+    background: var(--ink-card);
+    border: 1px solid var(--rule);
+    padding: 2.5rem 2rem;
+    position: relative;
+    border-radius: 2px;
+    transition: all 0.4s ease;
+  }
+
+  .pillar:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+  }
+
+  .pillar-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+
+  .pillar-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.65rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 1.25rem;
+    min-height: 3.6rem;
+  }
+
+  .pillar-title em { font-style: italic; color: var(--cream-dim); }
+
+  .pillar-body {
+    font-size: 0.93rem;
+    color: var(--cream-dim);
+    line-height: 1.6;
+    margin-bottom: 1.75rem;
+  }
+
+  .pillar-for {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding-top: 1.25rem;
+    border-top: 1px dashed var(--rule);
+  }
+
+  .pillar-for strong { color: var(--accent); font-weight: 500; }
+
+  /* STAT CARD */
+  .stat-showcase {
+    margin-top: 5rem;
+    background: var(--ink-soft);
+    border: 1px solid var(--rule);
+    padding: 3rem;
+    position: relative;
+    border-radius: 2px;
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 4rem;
+    align-items: center;
+  }
+
+  .stat-showcase::before {
+    content: '';
+    position: absolute;
+    top: -1px; left: -1px;
+    width: 2rem;
+    height: 2rem;
+    border-top: 2px solid var(--accent);
+    border-left: 2px solid var(--accent);
+  }
+
+  .stat-showcase::after {
+    content: '';
+    position: absolute;
+    bottom: -1px; right: -1px;
+    width: 2rem;
+    height: 2rem;
+    border-bottom: 2px solid var(--accent);
+    border-right: 2px solid var(--accent);
+  }
+
+  .stat-intro .stat-card-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .stat-intro h3 {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(1.5rem, 2.2vw, 2rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+
+  .stat-intro h3 em { font-style: italic; color: var(--accent); }
+
+  .stat-intro p {
+    font-size: 0.9rem;
+    color: var(--cream-dim);
+    line-height: 1.6;
+  }
+
+  .stat-rows { display: block; }
+
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 1.1rem 0;
+    border-bottom: 1px dashed var(--rule);
+  }
+
+  .stat-row:last-child { border-bottom: none; }
+
+  .stat-row-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .stat-row-value {
+    font-family: 'Fraunces', serif;
+    font-size: 1.25rem;
+    font-weight: 400;
+    color: var(--cream);
+  }
+
+  .stat-row.highlight .stat-row-label { color: var(--accent); }
+  .stat-row.highlight .stat-row-value {
+    color: var(--accent);
+    font-size: 1.9rem;
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  .stat-footnote {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    margin-top: 1.25rem;
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+  }
+
+  /* OPEN QUESTIONS */
+  .questions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0;
+    margin-top: 3rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .question {
+    padding: 2.5rem 2rem 2.5rem 0;
+    border-bottom: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
+  }
+
+  .question:nth-child(2n) {
+    padding-right: 0;
+    padding-left: 2rem;
+    border-right: none;
+  }
+
+  .question-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .question h4 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+    margin-bottom: 0.85rem;
+  }
+
+  .question h4 em { font-style: italic; color: var(--accent); }
+
+  .question p {
+    font-size: 0.9rem;
+    color: var(--cream-dim);
+    line-height: 1.6;
+  }
+
+  /* INFRASTRUCTURE */
+  .trust-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+    margin-top: 3rem;
+  }
+
+  .trust-list { list-style: none; }
+
+  .trust-list li {
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--rule);
+    display: flex;
+    gap: 1.5rem;
+    align-items: baseline;
+  }
+
+  .trust-list li:last-child { border-bottom: none; }
+
+  .trust-list .partner {
+    font-family: 'Fraunces', serif;
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--cream);
+    min-width: 7rem;
+  }
+
+  .trust-list .role {
+    font-size: 0.9rem;
+    color: var(--cream-dim);
+    line-height: 1.5;
+  }
+
+  .trust-list .role strong { color: var(--cream); font-weight: 400; }
+
+  /* SIGNUP */
+  .signup-section {
+    padding: 8rem 2.5rem;
+    background: var(--ink-soft);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .signup-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 60%;
+    height: 200%;
+    background: radial-gradient(ellipse at center, rgba(217, 119, 87, 0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .signup-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  .signup-heading {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(2.25rem, 4.5vw, 3.75rem);
+    line-height: 1;
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    max-width: 22ch;
+  }
+
+  .signup-heading em { font-style: italic; color: var(--accent); }
+
+  .signup-sub {
+    font-size: 1.05rem;
+    color: var(--cream-dim);
+    max-width: 42rem;
+    line-height: 1.6;
+    margin-bottom: 4rem;
+  }
+
+  .tracks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+
+  .track {
+    background: var(--ink-card);
+    border: 1px solid var(--rule);
+    padding: 2.5rem;
+    border-radius: 2px;
+    transition: border-color 0.3s ease;
+  }
+
+  .track:focus-within { border-color: var(--accent); }
+
+  .track-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .track h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 1.75rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+
+  .track h3 em { font-style: italic; color: var(--cream-dim); }
+
+  .track p {
+    font-size: 0.92rem;
+    color: var(--cream-dim);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    min-height: 6rem;
+  }
+
+  .form-input-row {
+    display: flex;
+    border-bottom: 1px solid var(--cream-dim);
+    padding-bottom: 0.5rem;
+    transition: border-color 0.3s ease;
+    margin-bottom: 0.75rem;
+  }
+
+  .form-input-row:focus-within { border-color: var(--accent); }
+
+  .form-input-row input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--cream);
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    padding: 0.5rem 0;
+    min-width: 0;
+  }
+
+  .form-input-row input::placeholder { color: var(--muted); font-style: italic; }
+
+  .form-input-row button {
+    background: transparent;
+    border: none;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 0 0.5rem 0 1rem;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .form-input-row button:hover {
+    color: var(--accent-bright);
+    transform: translateX(3px);
+  }
+
+  .form-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+    line-height: 1.5;
+  }
+
+  .form-success {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--accent);
+    font-size: 1rem;
+    display: none;
+    padding: 0.5rem 0;
+  }
+
+  /* CONCEPTUAL BANNER */
+  .conceptual {
+    padding: 4rem 2.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  .conceptual-box {
+    border: 1px dashed var(--rule);
+    padding: 2.5rem;
+    border-radius: 2px;
+  }
+
+  .conceptual-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--accent);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .conceptual-body {
+    font-family: 'Fraunces', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--cream-dim);
+    line-height: 1.55;
+    max-width: 55rem;
+    font-weight: 300;
+  }
+
+  .conceptual-body strong {
+    color: var(--cream);
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 3rem 2.5rem 4rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 2rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .footer-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    line-height: 1.7;
+  }
+
+  .footer-meta span { color: var(--cream-dim); }
+
+  .footer-disclaimer {
+    max-width: 38rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    line-height: 1.65;
+    letter-spacing: 0.01em;
+  }
+
+  .footer-disclaimer strong {
+    color: var(--cream-dim);
+    font-weight: 500;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 960px) {
+    .pillars { grid-template-columns: 1fr; }
+    .pillars-intro { grid-template-columns: 1fr; gap: 2rem; }
+    .stat-showcase { grid-template-columns: 1fr; gap: 2.5rem; padding: 2rem; }
+    .questions-grid { grid-template-columns: 1fr; }
+    .question, .question:nth-child(2n) {
+      padding: 2rem 0;
+      border-right: none;
+    }
+    .trust-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .tracks { grid-template-columns: 1fr; gap: 1.5rem; }
+    .track p { min-height: auto; }
+  }
+
+  @media (max-width: 700px) {
+    nav { padding: 1.25rem 1.5rem; }
+    nav .tag { display: none; }
+
+    .hero {
+      padding: 7rem 1.5rem 4rem;
+    }
+
+    .hero-meta { margin-top: 3rem; gap: 1.5rem; }
+
+    .section { padding: 5rem 1.5rem; }
+
+    .signup-section { padding: 5rem 1.5rem; }
+
+    .conceptual { padding: 3rem 1.5rem; }
+    .conceptual-box { padding: 2rem 1.5rem; }
+
+    .cta-row { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+
+    footer {
+      padding: 2rem 1.5rem 3rem;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .track { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">defi<span>·</span>lanthropy</div>
+  <div class="tag">Working thesis · 2026</div>
+</nav>
+
+<section class="hero">
+  <div class="eyebrow">A thesis, not a product</div>
+  <h1>What if <em>giving</em><br>was built on<br>open rails?</h1>
+  <p class="hero-body">
+    Defilanthropy is a working thesis for rebuilding nonprofit finance on transparent, programmable infrastructure. A treasury tool for nonprofits. A public pool where donors share yield instead of handing over principal. An AI layer that routes capital toward impact. None of it is built. All of it is possible. We're trying to figure out which parts should be.
+  </p>
+  <div class="cta-row">
+    <a href="#help" class="btn-primary">
+      Help us figure it out
+      <span class="arrow">→</span>
+    </a>
+    <a href="#thesis" class="btn-secondary">Read the thesis</a>
+  </div>
+  <div class="hero-meta">
+    <div><span>01</span> &nbsp; Nonprofit treasury</div>
+    <div><span>02</span> &nbsp; Donor yield pools</div>
+    <div><span>03</span> &nbsp; AI-directed giving</div>
+  </div>
+</section>
+
+<!-- THESIS -->
+<section class="section" id="thesis">
+  <div class="section-label s01">The thesis</div>
+  <p class="big-text">
+    US nonprofits hold over <em>$6 trillion in assets.</em> Most of it is earning next to nothing. Meanwhile, the infrastructure to change that exists &mdash; it's just been locked behind crypto expertise no fundraiser should need to hire for.
+  </p>
+  <p class="body-sub">
+    A children's hospital with $20M in operating reserves earning 0.4% leaves roughly $900,000 a year on the table. Scale that across a sector managing trillions, and we're talking about billions in missed program funding, every single year. The yield exists. The rails exist. The audits and the regulators and the publicly-traded infrastructure partners all exist. What's missing is a layer that makes this legible to the people whose job it is to fund missions, not manage wallets.
+  </p>
+  <p class="body-sub">
+    That's one half of the thesis. The other half is stranger and more interesting: what if the same rails that unlock treasury yield for institutions could also unlock an entirely new kind of giving for individuals &mdash; one where donors keep their principal and contribute only the yield? And what if an AI layer could route that capital toward the highest-impact nonprofits in real time, transparently, on chain?
+  </p>
+</section>
+
+<!-- PILLARS -->
+<section class="section">
+  <div class="section-label s02">The three pillars</div>
+
+  <div class="pillars-intro">
+    <h2>Three ideas,<br>one <em>shared rail.</em></h2>
+    <p class="body-sub">
+      Each pillar stands on its own. But they compound. A nonprofit's treasury can be funded by a donor pool. A donor pool can be optimized by AI. AI allocations can be made transparent to the institutions they support. Every piece is verifiable on the same public ledger.
+    </p>
+  </div>
+
+  <div class="pillars">
+
+    <div class="pillar">
+      <span class="pillar-num">Pillar 01 /</span>
+      <h3 class="pillar-title">Nonprofit<br><em>treasury yield</em></h3>
+      <p class="pillar-body">
+        A simple interface that lets finance teams earn 4&ndash;6% APY on idle operating reserves through institutional-grade DeFi lending &mdash; without ever touching cryptocurrency, managing wallets, or leaving the dollar. KYB onboarding, dedicated wallets, dual-signature approval, audit-ready reporting.
+      </p>
+      <div class="pillar-for"><strong>For:</strong> CFOs & finance committees</div>
+    </div>
+
+    <div class="pillar">
+      <span class="pillar-num">Pillar 02 /</span>
+      <h3 class="pillar-title">Donor-powered<br><em>yield pools</em></h3>
+      <p class="pillar-body">
+        A transparent, on-chain pool where individuals deposit stablecoins and direct the yield &mdash; not the principal &mdash; to a nonprofit of their choice. Keep your capital. Give your interest. Watch every dollar move in public. When you're ready, withdraw the principal back to your wallet.
+      </p>
+      <div class="pillar-for"><strong>For:</strong> Individual donors & DAFs</div>
+    </div>
+
+    <div class="pillar">
+      <span class="pillar-num">Pillar 03 /</span>
+      <h3 class="pillar-title">AI-directed<br><em>impact allocation</em></h3>
+      <p class="pillar-body">
+        Deposit into a fund, select a mandate (cause area, risk profile, impact metrics), and let an AI agent route capital across audited yield protocols and verified nonprofits in real time. Every decision logged. Every allocation auditable. Every outcome measurable.
+      </p>
+      <div class="pillar-for"><strong>For:</strong> Foundations & impact investors</div>
+    </div>
+
+  </div>
+
+  <!-- STAT CARD -->
+  <div class="stat-showcase">
+    <div class="stat-intro">
+      <div class="stat-card-label">Pillar 01 · Illustrative scenario</div>
+      <h3>The cost of a<br><em>savings account.</em></h3>
+      <p>Annual yield on $20M in operating reserves at a mid-sized children's hospital, across three treasury vehicles. Directional only &mdash; not a forecast, not a promise.</p>
+    </div>
+    <div class="stat-rows">
+      <div class="stat-row">
+        <span class="stat-row-label">Bank savings · 0.4% APY</span>
+        <span class="stat-row-value">$80,000</span>
+      </div>
+      <div class="stat-row">
+        <span class="stat-row-label">Money market · 4.0% APY</span>
+        <span class="stat-row-value">$800,000</span>
+      </div>
+      <div class="stat-row highlight">
+        <span class="stat-row-label">Defilanthropy · 4–6%</span>
+        <span class="stat-row-value">~$1,000,000</span>
+      </div>
+      <p class="stat-footnote">
+        Illustrative only. Yields would derive from USDC lending on audited protocols. Rates are variable. Not FDIC-insured. See disclaimers below.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- OPEN QUESTIONS -->
+<section class="section">
+  <div class="section-label s03">The open questions</div>
+  <p class="big-text">
+    A thesis isn't a product. These are the <em>hard problems</em> we don't have answers to yet &mdash; and the reason this site exists.
+  </p>
+
+  <div class="questions-grid">
+
+    <div class="question">
+      <span class="question-num">Q 01 /</span>
+      <h4>Is donor yield-sharing <em>legally possible</em> in the US?</h4>
+      <p>Yield-donation models exist abroad and in limited on-chain pilots. But pooled deposits, tax treatment of foregone interest, and securities classification remain genuinely unsettled. We need lawyers who want to solve this, not just flag it.</p>
+    </div>
+
+    <div class="question">
+      <span class="question-num">Q 02 /</span>
+      <h4>How do you keep an AI allocator <em>out of advisor territory?</em></h4>
+      <p>If an AI agent makes discretionary allocation decisions across protocols and nonprofits, does it become a registered investment adviser? Is there a rules-based, mandate-driven framing that preserves the vision without triggering the Investment Advisers Act?</p>
+    </div>
+
+    <div class="question">
+      <span class="question-num">Q 03 /</span>
+      <h4>What's the <em>tax treatment</em> of yield-only giving?</h4>
+      <p>If a donor deposits capital and directs the interest to a 501(c)(3), is that a charitable contribution? Constructive receipt doctrine suggests maybe not. There are structural workarounds. We need a CPA who finds this as fun as we do.</p>
+    </div>
+
+    <div class="question">
+      <span class="question-num">Q 04 /</span>
+      <h4>How should <em>governance</em> actually work?</h4>
+      <p>Who approves which nonprofits join the allocator's universe? Who audits impact claims? Is there a role for a 501(c)(3) to sit over the platform as a governance backstop? We're open to every model and married to none.</p>
+    </div>
+
+    <div class="question">
+      <span class="question-num">Q 05 /</span>
+      <h4>Which <em>board</em> will go first?</h4>
+      <p>No nonprofit finance committee wants to be the first to add DeFi allocations to its IPS. We think one will, eventually, for the right pitch and the right safeguards. We'd love to meet them.</p>
+    </div>
+
+    <div class="question">
+      <span class="question-num">Q 06 /</span>
+      <h4>Is this <em>even a good idea?</em></h4>
+      <p>The most important question. We think treasury yield is clearly useful. We think donor yield-pools are genuinely novel. We think AI allocation could be transformative or a disaster. Tell us what we're missing.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- INFRASTRUCTURE -->
+<section class="section">
+  <div class="section-label s04">The rails</div>
+  <div class="trust-grid">
+    <div>
+      <p class="big-text" style="margin-bottom: 1.5rem;">
+        None of this <em>works without rails.</em>
+      </p>
+      <p class="body-sub">
+        Defilanthropy doesn't reinvent financial infrastructure &mdash; it composes infrastructure that already exists, is already audited, and is already used by publicly traded companies, asset managers, and the Ethereum Foundation. The work is the interface, the compliance layer, and the thesis on top.
+      </p>
+    </div>
+    <ul class="trust-list">
+      <li>
+        <span class="partner">Circle</span>
+        <span class="role"><strong>Wallets & USDC.</strong> NYSE-listed issuer of the $60B+ regulated stablecoin, with reserves custodied at BNY Mellon and managed by BlackRock.</span>
+      </li>
+      <li>
+        <span class="partner">Morpho</span>
+        <span class="role"><strong>Lending infrastructure.</strong> $6.9B in total value locked, 25+ audits, and the protocol Coinbase uses to originate its own $1.2B+ lending book.</span>
+      </li>
+      <li>
+        <span class="partner">Aave</span>
+        <span class="role"><strong>Lending infrastructure.</strong> $40B+ in deposits across six years of uninterrupted operation. Used by VanEck, WisdomTree, and Securitize.</span>
+      </li>
+      <li>
+        <span class="partner">AI layer</span>
+        <span class="role"><strong>TBD.</strong> We're genuinely undecided on the right architecture. Open models, proprietary agents, rules engines, on-chain oracles &mdash; all on the table.</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- SIGNUP -->
+<section class="signup-section" id="help">
+  <div class="signup-inner">
+    <h2 class="signup-heading">
+      Help us figure<br>out <em>what this is.</em>
+    </h2>
+    <p class="signup-sub">
+      Defilanthropy is a thesis we want to stress-test in public. We're looking for two kinds of people right now: nonprofit finance teams who want to be first when there's something to pilot, and everyone else &mdash; lawyers, VCs, crypto builders, policy thinkers, skeptics &mdash; who can help us figure out whether this should exist and how. Pick your lane.
+    </p>
+
+    <div class="tracks">
+
+      <div class="track">
+        <div class="track-label">Track 01 · Nonprofits</div>
+        <h3>For finance and<br><em>executive teams</em></h3>
+        <p>If you manage operating reserves at a nonprofit and you're curious about treasury yield, leave your email. We'll send the working brief, including the draft investment policy amendment and yield projections for reserves at your scale. No ask, no pressure, no product.</p>
+        <form class="signup-form" data-track="nonprofit" id="form1">
+          <div class="form-input-row">
+            <input type="email" placeholder="your work email" required>
+            <button type="submit">Send brief →</button>
+          </div>
+          <p class="form-note">For nonprofit finance and executive teams.</p>
+          <p class="form-success">Thank you &mdash; we'll be in touch with the brief.</p>
+        </form>
+      </div>
+
+      <div class="track">
+        <div class="track-label">Track 02 · Everyone else</div>
+        <h3>For the people<br>who <em>help build it</em></h3>
+        <p>Lawyers who want to unravel the yield-donation question. VCs who want to pressure-test the model. Crypto builders who've done this before. Policy thinkers. Thoughtful skeptics. Tell us who you are and how you want to help &mdash; we read every reply.</p>
+        <form class="signup-form" data-track="collaborator" id="form2">
+          <div class="form-input-row">
+            <input type="email" placeholder="your email" required>
+            <button type="submit">Get involved →</button>
+          </div>
+          <p class="form-note">Lawyers, VCs, builders, thinkers, skeptics. All welcome.</p>
+          <p class="form-success">Thank you &mdash; we'll reach out personally.</p>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONCEPTUAL BANNER -->
+<section class="conceptual">
+  <div class="conceptual-box">
+    <div class="conceptual-label">A note on what this is</div>
+    <p class="conceptual-body">
+      <strong>Defilanthropy is currently a concept, not a product.</strong> Nothing on this page constitutes an offer of financial services, investment advice, or the solicitation of funds. There is no platform to sign up for, no smart contract deployed, no pool accepting deposits. This site exists to explore a thesis in public, invite collaboration, and figure out &mdash; honestly and carefully &mdash; whether any of this should actually get built.
+    </p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-meta">
+    © 2026 Defilanthropy · <span>A working thesis</span><br>
+    <span>defilanthropy.com</span> · Raleigh, NC
+  </div>
+  <p class="footer-disclaimer">
+    <strong>Disclaimer.</strong> This site is a conceptual exploration for informational and research purposes only. It does not constitute financial, investment, legal, or tax advice, nor an offer or solicitation to buy or sell any security or financial instrument. No platform, product, or service described on this page currently exists. Any numerical figures presented are illustrative and do not represent actual or projected returns. DeFi lending involves significant risks including smart contract risk, yield variability, regulatory uncertainty, and stablecoin depeg risk. USDC is not FDIC-insured. The ideas on this page may never be built; if built, they may work differently than described. Consult qualified legal, financial, and tax advisors before acting on anything you read here.
+  </p>
+</footer>
+
+<script>
+  document.querySelectorAll('.signup-form').forEach(form => {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const input = form.querySelector('input');
+      const row = form.querySelector('.form-input-row');
+      const note = form.querySelector('.form-note');
+      const success = form.querySelector('.form-success');
+      if (input.value) {
+        row.style.display = 'none';
+        note.style.display = 'none';
+        success.style.display = 'block';
+        // TODO: wire to Formspree or Buttondown with form.dataset.track
+        console.log('Signup [' + form.dataset.track + ']:', input.value);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
