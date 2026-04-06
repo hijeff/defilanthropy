@@ -374,10 +374,116 @@
   sup {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.65rem;
-    color: var(--accent);
+    line-height: 0;
     margin-left: 0.1rem;
     vertical-align: super;
-    line-height: 0;
+  }
+
+  sup a {
+    color: var(--accent);
+    text-decoration: none;
+    padding: 0 0.1rem;
+    transition: color 0.2s ease;
+  }
+
+  sup a:hover {
+    color: var(--accent-bright);
+    text-decoration: underline;
+  }
+
+  /* REFERENCES SECTION */
+  .references {
+    margin-top: 5rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--rule);
+    scroll-margin-top: 6rem;
+  }
+
+  .references-intro {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
+    font-style: italic;
+  }
+
+  ol.refs {
+    list-style: none;
+    counter-reset: ref;
+    padding: 0;
+    margin: 0;
+  }
+
+  ol.refs li {
+    counter-increment: ref;
+    position: relative;
+    padding: 1.1rem 0 1.1rem 3.25rem;
+    border-bottom: 1px dashed var(--rule);
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--cream-dim);
+    scroll-margin-top: 6rem;
+    transition: background-color 0.4s ease;
+    font-weight: 300;
+  }
+
+  ol.refs li:last-child {
+    border-bottom: none;
+  }
+
+  ol.refs li::before {
+    content: counter(ref);
+    position: absolute;
+    left: 0;
+    top: 1.2rem;
+    width: 2.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.03em;
+    text-align: right;
+    padding-right: 0.5rem;
+  }
+
+  ol.refs li.highlight {
+    background-color: rgba(217, 119, 87, 0.08);
+    border-left: 2px solid var(--accent);
+    padding-left: 3.1rem;
+  }
+
+  ol.refs a.source {
+    color: var(--cream-dim);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    transition: all 0.2s ease;
+    word-break: break-word;
+  }
+
+  ol.refs a.source:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+
+  ol.refs .ref-title {
+    color: var(--cream);
+    font-weight: 400;
+  }
+
+  ol.refs .ref-back {
+    display: inline-block;
+    margin-left: 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+    transition: color 0.2s ease;
+  }
+
+  ol.refs .ref-back:hover {
+    color: var(--accent);
   }
 
   /* PULL QUOTE */
@@ -693,6 +799,7 @@
       <li class="sub"><a href="#risks-ips">Modernizing the IPS</a></li>
       <li><a href="#conclusion"><span class="toc-num">09</span>Conclusion</a></li>
       <li><a href="#help"><span class="toc-num">10</span>Help Build It</a></li>
+      <li><a href="#references"><span class="toc-num">11</span>References</a></li>
     </ul>
 
     <div class="sidebar-footer">
@@ -722,7 +829,7 @@
     <section class="chapter" id="abstract">
       <span class="chapter-num">§ 00</span>
       <h2>Executive Summary</h2>
-      <p class="lead">The intersection of decentralized finance and institutional philanthropy represents a profound structural paradigm shift in how charitable capital is preserved, managed, and ultimately deployed. The U.S. nonprofit sector stewards an estimated <strong>$13.65 trillion in total assets</strong>, employs approximately 10% of the national workforce, and generates $3.7 trillion in annual revenue.<sup>1</sup> The magnitude of this capital base rivals the sovereign wealth funds and public pension systems of major industrialized nations.</p>
+      <p class="lead">The intersection of decentralized finance and institutional philanthropy represents a profound structural paradigm shift in how charitable capital is preserved, managed, and ultimately deployed. The U.S. nonprofit sector stewards an estimated <strong>$13.65 trillion in total assets</strong>, employs approximately 10% of the national workforce, and generates $3.7 trillion in annual revenue.<sup id="cite-1-1"><a href="#ref-1" data-ref="1">1</a></sup> The magnitude of this capital base rivals the sovereign wealth funds and public pension systems of major industrialized nations.</p>
       <p>Despite this scale, the financial architecture supporting most mid-sized and community-level nonprofit organizations is characterized by severe operational inefficiencies. Driven by stringent fiduciary conservatism, institutional path dependency, and a lack of access to sophisticated treasury tools, the median nonprofit allocates 60% to 80% of its unrestricted operating reserves to traditional bank checking, savings, and low-yield money market accounts. In macroeconomic environments where inflation consistently outpaces these nominal yields, the philanthropic sector effectively suffers a continuous, compounding erosion of purchasing power — billions in foregone programmatic funding, every year.</p>
       <p><strong>Defilanthropy</strong> emerges as a multi-layered conceptual framework designed to fundamentally rebuild nonprofit finance on open, transparent, and programmable digital infrastructure. By integrating audited, overcollateralized lending protocols within the decentralized finance ecosystem, charitable organizations can unlock substantially higher yields on operating cash while preserving liquidity and ensuring total operational transparency. This paper structures the analysis around three primary pillars: <em>treasury yield management</em> for nonprofit operating reserves, <em>donor-powered yield pools</em> that facilitate giving through generated interest rather than principal depletion, and an <em>autonomous, AI-directed allocation layer</em>.</p>
       <p>Furthermore, this analysis synthesizes recent foundational shifts across the digital asset landscape — the institutional demand shock for base-layer settlement assets, the integration of traditional credit frameworks within decentralized networks, and the evolving regulatory taxonomy articulated by the U.S. Securities and Exchange Commission — to establish a viable, compliance-oriented implementation roadmap for institutional philanthropy.</p>
@@ -734,16 +841,16 @@
       <h2>The Macroeconomic <em>Crisis</em> in Nonprofit Treasury Management</h2>
 
       <h3 id="crisis-scale">Sectoral Underperformance and Fiduciary Inertia</h3>
-      <p>To grasp the necessity of decentralized financial integration, one must first quantify the scale of the capital inefficiencies plaguing the current philanthropic model. According to the Federal Reserve Board's Financial Accounts of the United States, total assets held by U.S. nonprofit organizations reached $13.65 trillion in the third quarter of 2025, with private foundations alone accounting for $1.83 trillion in financial assets.<sup>1</sup> Total charitable giving, which reached $557.16 billion in recent annual reports, has begun to demonstrate real-term declines when adjusted for inflationary pressures.</p>
+      <p>To grasp the necessity of decentralized financial integration, one must first quantify the scale of the capital inefficiencies plaguing the current philanthropic model. According to the Federal Reserve Board's Financial Accounts of the United States, total assets held by U.S. nonprofit organizations reached $13.65 trillion in the third quarter of 2025, with private foundations alone accounting for $1.83 trillion in financial assets.<sup id="cite-1-2"><a href="#ref-1" data-ref="1">1</a></sup> Total charitable giving, which reached $557.16 billion in recent annual reports, has begun to demonstrate real-term declines when adjusted for inflationary pressures.</p>
       <p>Because nonprofits are heavily dependent on this inbound capital flow, their treasury management strategies default to extreme caution, utilizing legacy banking instruments that offer nominal safety but guarantee real-term losses. At representative bank rates of 0.4% to 1.5% APY, a mid-sized organization holding $20 million in unrestricted operating reserves generates a mere $80,000 in annual yield. If those same reserves were deployed into institutional-grade, on-chain lending protocols yielding between 4.0% and 7.0%, the organization could generate between $800,000 and $1.4 million annually.</p>
       <blockquote class="pull">
         The persistence of this financial gap is fundamentally driven by <em>governance friction</em> — moving reserves requires arduous board approvals and Investment Policy Statement amendments, compounded by a critical lack of dedicated treasury personnel capable of securely navigating cryptographic key management.
       </blockquote>
 
       <h3 id="crisis-endowment">The Endowment Disconnect: Liquidity Versus the Illiquidity Premium</h3>
-      <p>The profound conservatism of mid-sized nonprofit treasuries stands in stark contrast to the highly sophisticated capital allocation strategies employed by mega-endowments. The 2025 NACUBO-Commonfund Study of Endowments, which analyzed 657 higher education institutions managing a collective $944.3 billion, reported an average one-year net return of <strong>10.9% for fiscal year 2025</strong>, bringing the ten-year annualized return to 7.7%.<sup>4</sup> To consistently achieve these returns — necessary to outpace inflation and sustain average institutional spending rates of 4.9% — large endowments heavily bias their portfolios toward illiquid alternative investments: venture capital, private equity, and complex hedge fund strategies.</p>
-      <p>This reliance on the "illiquidity premium" — the prevailing economic theory that capital locked in illiquid private markets for extended durations must yield higher returns to compensate for the loss of optionality — creates an insurmountable barrier to entry for smaller nonprofits that simply cannot afford to lock up their operational lifelines.<sup>8</sup></p>
-      <p>However, leading institutional analysts argue that the advent of digital assets fundamentally disrupts this rigid paradigm. Jeff Park, Head of Alpha Strategies at Bitwise Asset Management, notes that the traditional term structure is increasingly inverted within the digital asset ecosystem.<sup>8</sup> In cryptocurrency markets, the illiquidity premium shows signs of distinct weakness, because liquidity itself serves as a mechanism to generate substantial alpha. Through automated market making, continuous arbitrage, and participation in dynamic on-chain lending pools, sophisticated treasuries can capture high, risk-adjusted yields instantly and continuously, circumventing the need to wait years for private equity value creation.</p>
+      <p>The profound conservatism of mid-sized nonprofit treasuries stands in stark contrast to the highly sophisticated capital allocation strategies employed by mega-endowments. The 2025 NACUBO-Commonfund Study of Endowments, which analyzed 657 higher education institutions managing a collective $944.3 billion, reported an average one-year net return of <strong>10.9% for fiscal year 2025</strong>, bringing the ten-year annualized return to 7.7%.<sup id="cite-4-1"><a href="#ref-4" data-ref="4">4</a></sup> To consistently achieve these returns — necessary to outpace inflation and sustain average institutional spending rates of 4.9% — large endowments heavily bias their portfolios toward illiquid alternative investments: venture capital, private equity, and complex hedge fund strategies.</p>
+      <p>This reliance on the "illiquidity premium" — the prevailing economic theory that capital locked in illiquid private markets for extended durations must yield higher returns to compensate for the loss of optionality — creates an insurmountable barrier to entry for smaller nonprofits that simply cannot afford to lock up their operational lifelines.<sup id="cite-8-1"><a href="#ref-8" data-ref="8">8</a></sup></p>
+      <p>However, leading institutional analysts argue that the advent of digital assets fundamentally disrupts this rigid paradigm. Jeff Park, Head of Alpha Strategies at Bitwise Asset Management, notes that the traditional term structure is increasingly inverted within the digital asset ecosystem.<sup id="cite-8-2"><a href="#ref-8" data-ref="8">8</a></sup> In cryptocurrency markets, the illiquidity premium shows signs of distinct weakness, because liquidity itself serves as a mechanism to generate substantial alpha. Through automated market making, continuous arbitrage, and participation in dynamic on-chain lending pools, sophisticated treasuries can capture high, risk-adjusted yields instantly and continuously, circumventing the need to wait years for private equity value creation.</p>
       <p>For a nonprofit organization, the ability to access decentralized yields comparable to traditional fixed-income instruments, while maintaining continuous, block-by-block daily liquidity, represents a structural breakthrough that effectively bridges the historical gap between the extreme conservatism of a commercial checking account and the high performance of a university endowment.</p>
     </section>
 
@@ -758,12 +865,12 @@
 
       <h3 id="foundations-arch">Architectural Evolution: Monolithic Versus Modular Lending</h3>
       <p>Capital allocated in regulated stablecoins can be deployed into decentralized, non-custodial lending protocols to generate yield. The ecosystem is currently dominated by two primary architectural approaches: monolithic liquidity protocols and modular lending layers.</p>
-      <p><strong>Aave</strong> operates as the premier monolithic liquidity protocol, commanding tens of billions of dollars in total value locked across more than fifteen disparate blockchain networks, historically offering stablecoin supply yields ranging from 2.0% to 8.0% depending on algorithmic borrower utilization rates.<sup>1</sup> Aave has recently introduced its V4 architecture, which mitigates previous cross-chain liquidity fragmentation by implementing a sophisticated hub-and-spoke model.<sup>11</sup> This allows unified liquidity hubs to concurrently serve distinct, specialized risk tranches — such as institutional real-world asset pools and fixed-rate products — elevating average capital utilization rates and tightening spreads without requiring users to bridge assets across chains.</p>
-      <p>Conversely, <strong>Morpho</strong> has pioneered a modular lending architecture that fundamentally alters rate pricing mechanisms. Reaching <strong>over $10 billion in total value locked by late 2025</strong>, Morpho's infrastructure facilitates the permissionless creation of isolated lending markets with highly customizable risk parameters, moving away from protocol-defined formulas toward pure market-driven rates.<sup>2</sup> This modularity has attracted significant traditional finance integration, evidenced by partnerships with Apollo Global Management and native USDC lending integrations with Coinbase.</p>
+      <p><strong>Aave</strong> operates as the premier monolithic liquidity protocol, commanding tens of billions of dollars in total value locked across more than fifteen disparate blockchain networks, historically offering stablecoin supply yields ranging from 2.0% to 8.0% depending on algorithmic borrower utilization rates.<sup id="cite-1-3"><a href="#ref-1" data-ref="1">1</a></sup> Aave has recently introduced its V4 architecture, which mitigates previous cross-chain liquidity fragmentation by implementing a sophisticated hub-and-spoke model.<sup id="cite-11-1"><a href="#ref-11" data-ref="11">11</a></sup> This allows unified liquidity hubs to concurrently serve distinct, specialized risk tranches — such as institutional real-world asset pools and fixed-rate products — elevating average capital utilization rates and tightening spreads without requiring users to bridge assets across chains.</p>
+      <p>Conversely, <strong>Morpho</strong> has pioneered a modular lending architecture that fundamentally alters rate pricing mechanisms. Reaching <strong>over $10 billion in total value locked by late 2025</strong>, Morpho's infrastructure facilitates the permissionless creation of isolated lending markets with highly customizable risk parameters, moving away from protocol-defined formulas toward pure market-driven rates.<sup id="cite-2-1"><a href="#ref-2" data-ref="2">2</a></sup> This modularity has attracted significant traditional finance integration, evidenced by partnerships with Apollo Global Management and native USDC lending integrations with Coinbase.</p>
       <p>By utilizing curated, institutional-grade vaults on these protocols, organizations supply vital liquidity to overcollateralized borrowers, earning continuous interest. Because these lending markets are governed by immutable, mathematically verifiable smart contracts rather than opaque centralized intermediaries, they operate continuously and autonomously, drastically minimizing traditional counterparty risk.</p>
 
       <h3 id="foundations-spark">Ecosystem Innovations: Spark Protocol and Real-World Asset Integration</h3>
-      <p>Beyond pure peer-to-peer lending, the decentralized finance ecosystem has expanded to incorporate yield subsidies derived from real-world assets. <strong>Spark Protocol</strong>, operating as the primary lending and yield distribution arm of the massive Sky ecosystem, allows users to access the Sky Savings Rate.<sup>2</sup> Instead of depositors earning yield exclusively from on-chain borrowing demand, Spark is capable of subsidizing rates using Sky's diversified, multi-billion-dollar revenue streams — which include traditional real-world asset yields, protocol fees, and strategic capital deployments.</p>
+      <p>Beyond pure peer-to-peer lending, the decentralized finance ecosystem has expanded to incorporate yield subsidies derived from real-world assets. <strong>Spark Protocol</strong>, operating as the primary lending and yield distribution arm of the massive Sky ecosystem, allows users to access the Sky Savings Rate.<sup id="cite-2-2"><a href="#ref-2" data-ref="2">2</a></sup> Instead of depositors earning yield exclusively from on-chain borrowing demand, Spark is capable of subsidizing rates using Sky's diversified, multi-billion-dollar revenue streams — which include traditional real-world asset yields, protocol fees, and strategic capital deployments.</p>
       <p>This architectural difference creates highly stable, predictable rates tailored for institutional users seeking governance-managed stablecoin yields with robust institutional backing. The integration of these disparate yield sources ensures that a nonprofit treasury manager can construct a diversified, risk-adjusted portfolio entirely within the decentralized finance ecosystem.</p>
     </section>
 
@@ -774,14 +881,14 @@
 
       <h3 id="eth-digital-oil">Valuing Decentralized Networks Beyond Cash Flows</h3>
       <p>The long-term viability of Defilanthropy relies intrinsically on the cryptographic security and enduring economic stability of the underlying blockchain network. Ethereum functions as the foundational settlement layer for the vast majority of high-value decentralized finance protocols, stablecoin issuance, and real-world asset tokenization activity.</p>
-      <p>To justify absolute fiduciary trust in this network, a robust macroeconomic valuation framework is required. Historically, traditional analysts have attempted to value Ethereum using equity frameworks, treating network transaction fees as corporate revenue modeled via discounted cash flows. Institutional researchers, however, argue this approach is fundamentally flawed, deeply underestimating the asset's utility and immense monetary premium.<sup>13</sup></p>
-      <p>Vivek Raman, Chief Executive Officer of the institutional research and privacy infrastructure firm Etherealize, posits that Ethereum must be definitively classified and valued as <em>"digital oil."</em><sup>13</sup> Within this framework, Ethereum serves as the indispensable computational fuel and foundational reserve asset of a rapidly expanding tokenized global economy. Much like physical oil powers the traditional industrial economy, Ethereum is continuously consumed to process complex smart contract transactions, cryptographically secure the network through staking, and collateralize billions of dollars in digital derivatives.</p>
+      <p>To justify absolute fiduciary trust in this network, a robust macroeconomic valuation framework is required. Historically, traditional analysts have attempted to value Ethereum using equity frameworks, treating network transaction fees as corporate revenue modeled via discounted cash flows. Institutional researchers, however, argue this approach is fundamentally flawed, deeply underestimating the asset's utility and immense monetary premium.<sup id="cite-13-1"><a href="#ref-13" data-ref="13">13</a></sup></p>
+      <p>Vivek Raman, Chief Executive Officer of the institutional research and privacy infrastructure firm Etherealize, posits that Ethereum must be definitively classified and valued as <em>"digital oil."</em><sup id="cite-13-2"><a href="#ref-13" data-ref="13">13</a></sup> Within this framework, Ethereum serves as the indispensable computational fuel and foundational reserve asset of a rapidly expanding tokenized global economy. Much like physical oil powers the traditional industrial economy, Ethereum is continuously consumed to process complex smart contract transactions, cryptographically secure the network through staking, and collateralize billions of dollars in digital derivatives.</p>
       <blockquote class="pull">
         The combination of Ethereum's supreme utility, a highly inelastic supply issuance model, and a deflationary fee-burn mechanism transforms the asset into a <em>highly productive store of value</em>.
       </blockquote>
 
       <h3 id="eth-tokenization">Institutional Confidence and the Tokenization Wave</h3>
-      <p>The transition of Ethereum from an experimental technology to "Wall Street's default chain" is accelerating at an unprecedented pace.<sup>16</sup> Raman notes that the financial system's reliance on archaic infrastructure — such as faxes and disparate Excel databases — is unsustainable, presenting an <strong>$18.9 trillion tokenization wave</strong> that will inherently reshape global finance.</p>
+      <p>The transition of Ethereum from an experimental technology to "Wall Street's default chain" is accelerating at an unprecedented pace.<sup id="cite-16-1"><a href="#ref-16" data-ref="16">16</a></sup> Raman notes that the financial system's reliance on archaic infrastructure — such as faxes and disparate Excel databases — is unsustainable, presenting an <strong>$18.9 trillion tokenization wave</strong> that will inherently reshape global finance.</p>
       <p>Supported by massive capital injections from entities like Paradigm and Electric Capital to build zero-knowledge privacy infrastructure, firms are systematically onboarding traditional financial institutions onto the Ethereum mainnet to tokenize massive markets, including the $16 trillion United States mortgage sector. The realization that Ethereum provides the only sufficiently secure, globally decentralized settlement layer for institutional tokenization unequivocally validates its position as the bedrock upon which the nonprofit sector must build its future treasury operations.</p>
     </section>
 
@@ -791,9 +898,9 @@
       <h2>The Institutional <em>Demand Shock</em></h2>
 
       <h3 id="shock-imbalance">The Supply-Demand Imbalance</h3>
-      <p>The theoretical confidence in Ethereum's decentralized financial infrastructure is further validated by a profound, ongoing shift in corporate and institutional capital allocation, characterized by what market analysts definitively term a "demand shock." During the summer of 2025, Matt Hougan, Chief Investment Officer at Bitwise Asset Management, published an extensive analytical memo detailing a massive structural imbalance between the strictly constrained supply of Ethereum and surging institutional demand.<sup>18</sup></p>
+      <p>The theoretical confidence in Ethereum's decentralized financial infrastructure is further validated by a profound, ongoing shift in corporate and institutional capital allocation, characterized by what market analysts definitively term a "demand shock." During the summer of 2025, Matt Hougan, Chief Investment Officer at Bitwise Asset Management, published an extensive analytical memo detailing a massive structural imbalance between the strictly constrained supply of Ethereum and surging institutional demand.<sup id="cite-18-1"><a href="#ref-18" data-ref="18">18</a></sup></p>
       <p>Over a condensed multi-month period beginning in mid-May 2025, newly launched spot Ethereum exchange-traded products and corporate treasury accumulation strategies collectively absorbed approximately <strong>2.83 million Ethereum tokens</strong>, representing over $10 billion in aggregate value. This hyper-aggressive accumulation fundamentally overwhelmed the network's tokenomics, outpacing newly minted supply of merely 80,000 to 100,000 tokens by a staggering factor of 32.</p>
-      <p>Hougan projected that this continuous influx of capital from corporate treasuries and institutional funds would ultimately result in the purchase of $20 billion worth of Ethereum throughout the subsequent year, fundamentally altering the asset's long-term pricing dynamics.<sup>21</sup></p>
+      <p>Hougan projected that this continuous influx of capital from corporate treasuries and institutional funds would ultimately result in the purchase of $20 billion worth of Ethereum throughout the subsequent year, fundamentally altering the asset's long-term pricing dynamics.<sup id="cite-21-1"><a href="#ref-21" data-ref="21">21</a></sup></p>
 
       <h3 id="shock-corporate">Corporate Treasuries Leading the Paradigm Shift</h3>
       <p>Crucially, this demand shock was not driven by speculative retail trading or transient market enthusiasm, but rather by publicly traded corporations adopting digital assets as permanent, core treasury reserve strategies. Corporate entities rapidly liquidated traditional, fiat-denominated assets to aggressively accumulate hundreds of millions of dollars in digital reserves, treating the asset class as a strategic hedge against persistent macroeconomic instability.</p>
@@ -801,7 +908,7 @@
       <p>The reality of this sustained demand shock unequivocally illustrates that the corporate sector has already executed the migration of massive balance sheets to decentralized networks. This provides a robust precedent for the nonprofit sector, demonstrating that holding digital assets within institutional treasuries is no longer a peripheral strategy, but a mainstream financial imperative.</p>
 
       <h3 id="shock-bridge">Bridging TradFi and DeFi: The Maple Finance Precedent</h3>
-      <p>While the corporate adoption of foundational assets validates the underlying network, the direct deployment of institutional capital into specific decentralized credit markets conclusively demonstrates the viability of the yield-generation mechanisms proposed by Defilanthropy. In early 2025, <strong>Bitwise Asset Management officially executed its first institutional decentralized finance allocation</strong> by deploying significant capital into Maple Finance, a leading protocol specializing exclusively in institutional-grade, on-chain credit markets.<sup>24</sup></p>
+      <p>While the corporate adoption of foundational assets validates the underlying network, the direct deployment of institutional capital into specific decentralized credit markets conclusively demonstrates the viability of the yield-generation mechanisms proposed by Defilanthropy. In early 2025, <strong>Bitwise Asset Management officially executed its first institutional decentralized finance allocation</strong> by deploying significant capital into Maple Finance, a leading protocol specializing exclusively in institutional-grade, on-chain credit markets.<sup id="cite-24-1"><a href="#ref-24" data-ref="24">24</a></sup></p>
       <p>This targeted allocation into Maple's overcollateralized lending pools, utilizing highly secure assets like Bitcoin and Ethereum as underlying collateral to mitigate liquidation risks, marked a pivotal transition bridging the rigorous requirements of traditional finance with decentralized execution. Jeff Park emphasized that this deployment was explicitly driven by a strategic mandate to capture crypto-native investments capable of generating dynamic, robust returns that remain fundamentally uncorrelated with traditional equity and fixed-income markets.</p>
       <blockquote class="pull">
         This precedent directly dismantles the historical, pervasive argument that decentralized finance is exclusively the domain of unregulated retail speculation, proving unequivocally that <em>fiduciaries managing tens of billions in client assets can responsibly navigate, and extract massive value from, programmable on-chain credit markets</em>.
@@ -818,20 +925,20 @@
       <p>The foundational pillar directly addresses the immediate, glaring inefficiency of nonprofit operating reserves. In this operational model, a nonprofit completes standard institutional Know-Your-Business verification and is provisioned a dedicated, developer-controlled digital wallet. Legacy fiat is deposited via traditional wire transfers, programmatically converted into a regulated stablecoin like USDC, and routed into overcollateralized lending vaults on battle-tested protocols like Aave or Morpho.</p>
       <p>The fundamental, overriding advantage of this architecture is its <em>strictly non-custodial nature</em>. The platform providing the user interface and analytics never takes legal possession or technical custody of the underlying assets, effectively eliminating the commingling risks that plagued centralized lending platforms during the 2022 market contractions.</p>
       <p>Governance and operational security are rigorously maintained through advanced cryptographic access controls. All decisions to deposit, withdraw, or rebalance capital require on-chain multi-signature approvals, mandating that cryptographic sign-offs from multiple organizational officers — such as the Executive Director and the Chief Financial Officer — are successfully executed before any transaction is broadcast. This seamlessly replicates the dual-control treasury policies universally required by competent nonprofit boards.</p>
-      <p>Furthermore, the emergence of institution-focused Layer-1 networks optimized for global payments and compliance introduces massive additional utility. <strong>Keeta Network</strong>, for example, processes direct blockchain-to-blockchain transactions with settlement times of 400 milliseconds and a theoretical throughput of 10 million transactions per second.<sup>28</sup> Keeta provides nonprofits with native, on-chain access to U.S. Treasury bill investments and tokenized securities, ensuring that idle capital can be dynamically shifted between decentralized lending yields and traditional risk-free rates without ever leaving the blockchain environment. Coupled with verifiable on-chain credentialing systems like PASS and integrations with Visa Direct for instant fiat payouts to over 190 countries, modern treasury optimization platforms offer a level of financial interoperability that legacy banking simply cannot match.</p>
+      <p>Furthermore, the emergence of institution-focused Layer-1 networks optimized for global payments and compliance introduces massive additional utility. <strong>Keeta Network</strong>, for example, processes direct blockchain-to-blockchain transactions with settlement times of 400 milliseconds and a theoretical throughput of 10 million transactions per second.<sup id="cite-28-1"><a href="#ref-28" data-ref="28">28</a></sup> Keeta provides nonprofits with native, on-chain access to U.S. Treasury bill investments and tokenized securities, ensuring that idle capital can be dynamically shifted between decentralized lending yields and traditional risk-free rates without ever leaving the blockchain environment. Coupled with verifiable on-chain credentialing systems like PASS and integrations with Visa Direct for instant fiat payouts to over 190 countries, modern treasury optimization platforms offer a level of financial interoperability that legacy banking simply cannot match.</p>
 
       <h3 id="pillar-two">Pillar Two — Donor-Powered Yield Pools and "Donationless Philanthropy"</h3>
       <p>The second pillar fundamentally redesigns the economic mechanics of individual and corporate philanthropy by completely <em>decoupling the donation of yield from the donation of principal</em>. In traditional charitable models, donors must irrevocably part with their capital to fund a nonprofit's mission, creating an inherent ceiling on giving capacity based on personal wealth depletion.</p>
       <p>Defilanthropy proposes an innovative model where a donor deploys capital into a highly secure stablecoin lending vault, retains absolute legal ownership and withdrawal rights over the principal, and utilizes programmable smart contracts to automatically route the continuously accrued interest to a designated charity. This mechanism creates a perpetual, compounding funding stream without diminishing the donor's net worth or liquidity profile.</p>
-      <p>The operational viability of this exact concept is comprehensively validated by existing platforms operating at scale. <strong>Endaoment</strong> operates as a registered United States 501(c)(3) community foundation that has successfully transitioned traditional donor-advised funds to the blockchain. By late 2025, Endaoment had moved <strong>over $135 million in charitable donations on-chain</strong>, granting over $80 million to a vast network of 1.8 million eligible nonprofits.<sup>36</sup> Endaoment natively allows for idle capital held within its DAFs to be deployed into yield-bearing decentralized finance protocols prior to grant distribution, capturing additional value for charitable causes.</p>
-      <p>Similarly, <strong>Glo Dollar</strong> demonstrates the revolutionary concept of "donationless philanthropy" directly at the protocol level. Glo Dollar operates as a fully fiat-backed, regulated stablecoin that invests its underlying reserves in low-risk government securities. Rather than retaining the generated interest as corporate profit, Glo Dollar programmatically donates 100% of the yield to charities such as GiveDirectly.<sup>41</sup></p>
-      <p>Extensive research models demonstrate the profound mathematical leverage of this system: if Glo Dollar were to capture a market capitalization of $84 billion, rivaling major stablecoin incumbents, it would generate over $2 billion in annual yield. Based on rigorous evaluations by independent assessors like GiveWell, this sustained yield would effectively lift more than four million individuals out of extreme poverty annually.<sup>42</sup> Furthermore, evidence from these cash transfer programs demonstrates a massive economic multiplier effect, where every dollar delivered generates $2.00 to $2.50 in local economic spillover.</p>
+      <p>The operational viability of this exact concept is comprehensively validated by existing platforms operating at scale. <strong>Endaoment</strong> operates as a registered United States 501(c)(3) community foundation that has successfully transitioned traditional donor-advised funds to the blockchain. By late 2025, Endaoment had moved <strong>over $135 million in charitable donations on-chain</strong>, granting over $80 million to a vast network of 1.8 million eligible nonprofits.<sup id="cite-36-1"><a href="#ref-36" data-ref="36">36</a></sup> Endaoment natively allows for idle capital held within its DAFs to be deployed into yield-bearing decentralized finance protocols prior to grant distribution, capturing additional value for charitable causes.</p>
+      <p>Similarly, <strong>Glo Dollar</strong> demonstrates the revolutionary concept of "donationless philanthropy" directly at the protocol level. Glo Dollar operates as a fully fiat-backed, regulated stablecoin that invests its underlying reserves in low-risk government securities. Rather than retaining the generated interest as corporate profit, Glo Dollar programmatically donates 100% of the yield to charities such as GiveDirectly.<sup id="cite-41-1"><a href="#ref-41" data-ref="41">41</a></sup></p>
+      <p>Extensive research models demonstrate the profound mathematical leverage of this system: if Glo Dollar were to capture a market capitalization of $84 billion, rivaling major stablecoin incumbents, it would generate over $2 billion in annual yield. Based on rigorous evaluations by independent assessors like GiveWell, this sustained yield would effectively lift more than four million individuals out of extreme poverty annually.<sup id="cite-42-1"><a href="#ref-42" data-ref="42">42</a></sup> Furthermore, evidence from these cash transfer programs demonstrates a massive economic multiplier effect, where every dollar delivered generates $2.00 to $2.50 in local economic spillover.</p>
 
       <h3 id="pillar-three">Pillar Three — AI-Directed Allocation and the Agentic Economy</h3>
       <p>The most visionary, conceptually disruptive, and regulatory-complex component of the Defilanthropy framework is the implementation of an artificial intelligence-directed allocation layer. Rather than relying on human treasury managers to continuously monitor fluctuating yield curves, assess real-time protocol risks, and manually rebalance portfolios across diverse liquidity pools, this pillar advocates for delegating complex execution entirely to autonomous AI agents.</p>
       <p>A philanthropic entity or high-net-worth donor would establish a strict, programmatic mandate — defining exact risk tolerances, immediate liquidity requirements, and target impact causes — and permit a localized AI agent to continuously execute transactions on their behalf.</p>
-      <p>The broader transition toward this automated "agentic economy" is rapidly accelerating across the digital asset landscape, moving the industry from human-driven decentralized finance into autonomous execution environments. The foundational development of the <strong>Model Context Protocol (MCP)</strong>, created by Anthropic and stewarded by the Agentic AI Foundation, definitively standardizes the critical interface through which artificial intelligence models communicate with external financial tools, complex data sources, and secure software environments.<sup>47</sup></p>
-      <p>By directly pairing this advanced protocol with sophisticated blockchain account abstraction standards — specifically ERC-4337 and EIP-7702 — AI agents gain the native capability to securely hold funds, cryptographically sign complex transactions, and interact with decentralized exchanges entirely autonomously, without ever exposing the underlying private keys.<sup>51</sup></p>
+      <p>The broader transition toward this automated "agentic economy" is rapidly accelerating across the digital asset landscape, moving the industry from human-driven decentralized finance into autonomous execution environments. The foundational development of the <strong>Model Context Protocol (MCP)</strong>, created by Anthropic and stewarded by the Agentic AI Foundation, definitively standardizes the critical interface through which artificial intelligence models communicate with external financial tools, complex data sources, and secure software environments.<sup id="cite-47-1"><a href="#ref-47" data-ref="47">47</a></sup></p>
+      <p>By directly pairing this advanced protocol with sophisticated blockchain account abstraction standards — specifically ERC-4337 and EIP-7702 — AI agents gain the native capability to securely hold funds, cryptographically sign complex transactions, and interact with decentralized exchanges entirely autonomously, without ever exposing the underlying private keys.<sup id="cite-51-1"><a href="#ref-51" data-ref="51">51</a></sup></p>
       <p>To rigorously mitigate the immense risks of autonomous capital control, these enterprise-grade agent wallets implement strict, unalterable boundary conditions. These include daily transaction budget caps, highly specific allowlists governing approved smart contracts and acceptable counterparty assets, and real-time algorithmic circuit breakers capable of immediately pausing operations if abnormal market behavior is detected. Every autonomous decision made by the agent is permanently linked to an immutable, human-readable on-chain audit log, ensuring total accountability.</p>
       <blockquote class="pull">
         AI-directed allocation completely transforms philanthropy from a static, cumbersome annual grant cycle into a <em>highly dynamic, continuously optimizing portfolio</em>, capable of reacting to global capital flows and funding highly localized public goods with sub-second latency.
@@ -899,7 +1006,7 @@
       <p>A critical, historic barrier to the widespread institutional adoption of decentralized finance has been a profound lack of regulatory clarity. Fiduciaries managing charitable capital operate under incredibly strict legal mandates and inherently cannot deploy assets into environments characterized by significant, ongoing legal ambiguity or the threat of retroactive enforcement. However, recent shifts in federal regulatory postures have begun to establish a cohesive, navigable framework highly conducive to robust institutional participation.</p>
 
       <h3 id="reg-project-crypto">SEC Project Crypto and the New Token Taxonomy</h3>
-      <p>The regulatory environment underwent a fundamental, paradigm-shifting transformation following a landmark speech delivered by Securities and Exchange Commission Chairman <strong>Paul S. Atkins on November 12, 2025</strong>, at the Federal Reserve Bank of Philadelphia.<sup>57</sup> Detailing the agency's highly anticipated "Project Crypto" initiative, Chairman Atkins meticulously outlined a comprehensive regulatory vision anchored in basic fairness and common sense, recognizing that while the longstanding Howey investment contract test remains wholly applicable, it possesses inherent, defining limiting principles.</p>
+      <p>The regulatory environment underwent a fundamental, paradigm-shifting transformation following a landmark speech delivered by Securities and Exchange Commission Chairman <strong>Paul S. Atkins on November 12, 2025</strong>, at the Federal Reserve Bank of Philadelphia.<sup id="cite-57-1"><a href="#ref-57" data-ref="57">57</a></sup> Detailing the agency's highly anticipated "Project Crypto" initiative, Chairman Atkins meticulously outlined a comprehensive regulatory vision anchored in basic fairness and common sense, recognizing that while the longstanding Howey investment contract test remains wholly applicable, it possesses inherent, defining limiting principles.</p>
       <p>Crucially, the Commission introduced a sophisticated new token taxonomy specifically categorizing digital assets based entirely on underlying economic reality rather than superficial nomenclature. This framework definitively identifies four distinct categories:</p>
 
       <p><strong>Digital Commodities or Network Tokens</strong> — Assets intrinsically linked to and deriving their value from the programmatic operation of a functional, decentralized crypto system. Because these assets do not rely on the essential managerial efforts of an identifiable issuer for profit generation, they are explicitly not classified as securities.</p>
@@ -907,7 +1014,7 @@
       <p><strong>Digital Tools</strong> — Tokens functioning exclusively as practical mechanisms, such as credentials, software licenses, or access badges, which are explicitly not considered securities.</p>
       <p><strong>Tokenized Securities</strong> — Traditional financial instruments — corporate stocks, municipal bonds, or private credit — digitized on a public blockchain, which definitively remain securities and are subject to all corresponding disclosures and regulations.</p>
 
-      <p>A vital, foundational component of this new taxonomy is the explicit legal recognition that an investment contract is not a permanent, unremovable label forever attached to a digital object. Drawing analogies to citrus groves evolving into golf courses, Atkins established that as decentralized networks mature, source code is shipped, and managerial control disperses, a token that may have initially been sold as a security can successfully shed that status, transforming entirely into a digital commodity.<sup>58</sup></p>
+      <p>A vital, foundational component of this new taxonomy is the explicit legal recognition that an investment contract is not a permanent, unremovable label forever attached to a digital object. Drawing analogies to citrus groves evolving into golf courses, Atkins established that as decentralized networks mature, source code is shipped, and managerial control disperses, a token that may have initially been sold as a security can successfully shed that status, transforming entirely into a digital commodity.<sup id="cite-58-1"><a href="#ref-58" data-ref="58">58</a></sup></p>
       <blockquote class="pull">
         This unprecedented regulatory clarity provides institutional fiduciaries with the precise legal assurance necessary to interact with foundational assets like Ethereum and established decentralized finance protocols <em>without the continuous, paralyzing threat of retroactive enforcement</em>.
       </blockquote>
@@ -935,7 +1042,7 @@
       <p>Finally, operational risk relates directly to the internal management of cryptographic keys and the complex integration of decentralized yield generation into traditional, legacy accounting and external auditing frameworks.</p>
 
       <h3 id="risks-ips">Modernizing the Investment Policy Statement</h3>
-      <p>For a nonprofit to responsibly and legally adopt Defilanthropy, the organization's Board of Directors must formally and explicitly integrate digital asset parameters into their governing Investment Policy Statement (IPS). The IPS serves as the ultimate roadmap for portfolio management, and its modernization is critical to ensure compliance with the Uniform Prudent Management of Institutional Funds Act.<sup>66</sup></p>
+      <p>For a nonprofit to responsibly and legally adopt Defilanthropy, the organization's Board of Directors must formally and explicitly integrate digital asset parameters into their governing Investment Policy Statement (IPS). The IPS serves as the ultimate roadmap for portfolio management, and its modernization is critical to ensure compliance with the Uniform Prudent Management of Institutional Funds Act.<sup id="cite-66-1"><a href="#ref-66" data-ref="66">66</a></sup></p>
       <p>The revised document must be updated to explicitly define all permissible digital assets (e.g., highly regulated, fiat-backed stablecoins), explicitly list all approved yield-generation venues (e.g., highly specific overcollateralized lending protocols operating on established networks), and set rigid maximum allocation thresholds as a strict percentage of total unrestricted operating reserves. Furthermore, the updated governance framework must establish incredibly stringent technical access controls, explicitly mandating multi-signature cryptographic authorizations perfectly aligned with existing dual-control financial policies to absolutely prevent unilateral malfeasance, accidental loss, or internal fraud.</p>
     </section>
 
@@ -967,6 +1074,148 @@
         <div class="disclaimer-label">A note on what this is</div>
         <p><strong>Defilanthropy is currently a concept, not a product.</strong> This document is a conceptual exploration for informational and research purposes only. It does not constitute financial, investment, legal, or tax advice, nor an offer or solicitation to buy or sell any security or financial instrument. No platform described here currently exists or accepts deposits. All numerical figures are illustrative and do not represent actual or projected returns. DeFi lending involves significant risks including smart contract risk, yield variability, regulatory uncertainty, and stablecoin depeg risk. USDC and other stablecoins are not FDIC-insured. The ideas presented may never be implemented; if implemented, they may function differently than described. Consult qualified legal, financial, and tax advisors before acting on anything you read here.</p>
       </div>
+    </section>
+
+    <!-- REFERENCES -->
+    <section class="chapter" id="references">
+      <span class="chapter-num">§ 11</span>
+      <h2>References &amp; <em>Sources</em></h2>
+      <p class="references-intro">All URLs accessed April 2026. Click any superscript citation in the text above to jump to its source. Cited references are highlighted in the list below; uncited entries are background sources from the working bibliography.</p>
+
+      <ol class="refs">
+        <li id="ref-1"><span class="ref-title">Placeholder - This is intentionally left blank and will be revised in futute versions.</span> 
+        <li id="ref-2"><span class="ref-title">Aave vs Compound vs Morpho: DeFi Lending Rates Compared.</span> Eco Protocol Support, accessed April 2026. <a href="https://eco.com/support/en/articles/12271620-aave-vs-compound-vs-morpho-defi-lending-rates-compared" class="source" target="_blank" rel="noopener">eco.com/support/en/articles/12271620</a> <a href="#cite-2-1" class="ref-back">↩ back</a></li>
+
+        <li id="ref-3"><span class="ref-title">Elements of a Clearly Defined Investment Policy Statement for Nonprofits.</span> RBC Wealth Management, accessed April 2026. <a href="https://ca.rbcwealthmanagement.com/delegate/services/file/621560/content" class="source" target="_blank" rel="noopener">ca.rbcwealthmanagement.com/delegate/services/file/621560/content</a></li>
+
+        <li id="ref-4"><span class="ref-title">FY25 NACUBO-Commonfund Study Released.</span> Commonfund, accessed April 2026. The 2025 NACUBO-Commonfund Study analyzed 657 higher education institutions managing $944.3 billion in collective assets. <a href="https://www.commonfund.org/research-center/press-releases/fy25-nacubo-commonfund-study-released" class="source" target="_blank" rel="noopener">commonfund.org/research-center/press-releases/fy25-nacubo-commonfund-study-released</a> <a href="#cite-4-1" class="ref-back">↩ back</a></li>
+
+        <li id="ref-5"><span class="ref-title">FY2025 NACUBO Results Show Strong Returns but Rising Pressures on Institutions' Budgets.</span> TIFF Investment Management, accessed April 2026. <a href="https://www.tiff.org/fy2025-nacubo-results-show-strong-returns-but-rising-pressures-on-institutions-budgets/" class="source" target="_blank" rel="noopener">tiff.org/fy2025-nacubo-results-show-strong-returns-but-rising-pressures-on-institutions-budgets</a></li>
+
+        <li id="ref-6"><span class="ref-title">Study of Endowments — Key Highlights Infographic 2025.</span> Commonfund, accessed April 2026. <a href="https://www.commonfund.org/blog/study-of-endowments-key-highlights-infographic-2025" class="source" target="_blank" rel="noopener">commonfund.org/blog/study-of-endowments-key-highlights-infographic-2025</a></li>
+
+        <li id="ref-7"><span class="ref-title">2025 NACUBO-Commonfund Study: Endowment Trends and Insights.</span> Mercer, accessed April 2026. <a href="https://www.mercer.com/en-us/insights/investments/not-for-profit/2025-nacubo-commonfund-study-of-endowments/" class="source" target="_blank" rel="noopener">mercer.com/en-us/insights/investments/not-for-profit/2025-nacubo-commonfund-study-of-endowments</a></li>
+
+        <li id="ref-8"><span class="ref-title">"Biggest Beneficiary Will Be Bitcoin": Jeff Park on BTC's Massive Supply Advantage.</span> TradingView / U.Today, accessed April 2026. Jeff Park, Head of Alpha Strategies at Bitwise Asset Management, on the inversion of the traditional illiquidity premium in digital asset markets. <a href="https://www.tradingview.com/news/u_today:f7715a679094b:0-biggest-beneficiary-will-be-bitcoin-jeff-park-on-btc-s-massive-supply-advantage/" class="source" target="_blank" rel="noopener">tradingview.com/news/u_today:f7715a679094b</a> <a href="#cite-8-1" class="ref-back">↩ back</a></li>
+
+        <li id="ref-9"><span class="ref-title">Bitwise COIN Option Income Strategy ETF.</span> SEC EDGAR Filing, accessed April 2026. <a href="https://www.sec.gov/Archives/edgar/data/1928561/000121390025027042/ea0234778-07_497.htm" class="source" target="_blank" rel="noopener">sec.gov/Archives/edgar/data/1928561/000121390025027042</a></li>
+
+        <li id="ref-10"><span class="ref-title">Stablecoin Landscape and the Remittance Use Case Report.</span> Coinchange Research, accessed April 2026. <a href="https://www.coinchange.io/research-reports/stablecoin-landscape-and-the-remittance-use-case-report" class="source" target="_blank" rel="noopener">coinchange.io/research-reports/stablecoin-landscape-and-the-remittance-use-case-report</a></li>
+
+        <li id="ref-11"><span class="ref-title">AAVE Price Prediction 2026, 2027 and 2030.</span> MEXC News, accessed April 2026. Discussion of Aave V4 architecture and the hub-and-spoke liquidity model. <a href="https://www.mexc.com/news/1002698" class="source" target="_blank" rel="noopener">mexc.com/news/1002698</a> <a href="#cite-11-1" class="ref-back">↩ back</a></li>
+
+        <li id="ref-12"><span class="ref-title">Top Stablecoin Lending Platforms 2026: Complete Guide to USDC, USDT, DAI Yields.</span> Eco Protocol Support, accessed April 2026. <a href="https://eco.com/support/en/articles/12272109-top-stablecoin-lending-platforms-2026-complete-guide-to-usdc-usdt-dai-yields" class="source" target="_blank" rel="noopener">eco.com/support/en/articles/12272109</a></li>
+
+        <li id="ref-13"><span class="ref-title">Ethereum Price Forecast: ETH's New Valuation Framework Tags It "Digital Oil."</span> FXStreet, accessed April 2026. Vivek Raman of Etherealize on the "digital oil" macroeconomic framework for valuing Ethereum. <a href="https://www.fxstreet.com/cryptocurrencies/news/ethereum-price-forecast-eths-new-valuation-framework-tags-it-digital-oil-highlights-an-8-000-bull-case-202506130058" class="source" target="_blank" rel="noopener">fxstreet.com/cryptocurrencies/news/ethereum-price-forecast-eths-new-valuation-framework</a> <a href="#cite-13-1" class="ref-back">↩ back</a></li>
+
+        <li id="ref-14"><span class="ref-title">ETH is Digital Oil.</span> r/ethereum community discussion, Reddit, accessed April 2026. <a href="https://www.reddit.com/r/ethereum/comments/1l9mb2r/eth_is_digital_oil/" class="source" target="_blank" rel="noopener">reddit.com/r/ethereum/comments/1l9mb2r/eth_is_digital_oil</a></li>
+
+        <li id="ref-15"><span class="ref-title">Research Expert's Profile.</span> Binance Square, accessed April 2026. <a href="https://www.binance.com/en/square/profile/research_expert" class="source" target="_blank" rel="noopener">binance.com/en/square/profile/research_expert</a></li>
+
+        <li id="ref-16"><span class="ref-title">Vivek Raman (Etherealize) on Bringing Wall Street's $16 Trillion Mortgage Market to Ethereum.</span> YouTube interview, accessed April 2026. Discussion of the $18.9 trillion tokenization wave and Ethereum as "Wall Street's default chain." <a href="https://www.youtube.com/watch?v=Kr24ivApCRc" class="source" target="_blank" rel="noopener">youtube.com/watch?v=Kr24ivApCRc</a> <a href="#cite-16-1" class="ref-back">↩ back</a></li>
+
+        <li id="ref-17"><span class="ref-title">Ethereum To Hit $15,000 In 2026 As 'Wall Street's Default Chain.'</span> MEXC News, accessed April 2026. <a href="https://www.mexc.com/news/419322" class="source" target="_blank" rel="noopener">mexc.com/news/419322</a></li>
+
+        <li id="ref-18"><span class="ref-title">The Ethereum Demand Shock.</span> DACFP, accessed April 2026. Matt Hougan, CIO of Bitwise, on the structural supply-demand imbalance in Ethereum during summer 2025. <a href="https://dacfp.com/the-ethereum-demand-shock/" class="source" target="_blank" rel="noopener">dacfp.com/the-ethereum-demand-shock</a> <a href="#cite-18-1" class="ref-back">↩ back</a></li>
+
+        <li id="ref-19"><span class="ref-title">Ethereum Demand Shock Will Rock Markets, Bitwise CIO Warns.</span> TradingView / NewsBTC, accessed April 2026. <a href="https://www.tradingview.com/news/newsbtc:7876f3700094b:0-ethereum-demand-shock-will-rock-markets-bitwise-cio-warns/" class="source" target="_blank" rel="noopener">tradingview.com/news/newsbtc:7876f3700094b</a></li>
+
+        <li id="ref-20"><span class="ref-title">The Ethereum Demand Shock — CIO Memo.</span> Bitwise Investments, accessed April 2026. <a href="https://experts.bitwiseinvestments.com/cio-memos/the-ethereum-demand-shock" class="source" target="_blank" rel="noopener">experts.bitwiseinvestments.com/cio-memos/the-ethereum-demand-shock</a></li>
+
+        <li id="ref-21"><span class="ref-title">Spot Ethereum ETFs Saw $533.9M in Inflows, the 3rd Largest Single-Day Gain.</span> Binance Square, accessed April 2026. <a href="https://www.binance.com/lo-LA/square/post/27344812956386" class="source" target="_blank" rel="noopener">binance.com/lo-LA/square/post/27344812956386</a> <a href="#cite-21-1" class="ref-back">↩ back</a></li>
+
+        <li id="ref-22"><span class="ref-title">Ethereum Rally Driven by Structural Demand Surge, Says Bitwise.</span> The Block, accessed April 2026. <a href="https://www.theblock.co/post/363943/ethereum-rally-demand" class="source" target="_blank" rel="noopener">theblock.co/post/363943/ethereum-rally-demand</a></li>
+
+        <li id="ref-23"><span class="ref-title">Ethereum Demand Shock Could Significantly Impact ETH Price Movements: Analysis.</span> Crowdfund Insider, July 2025. <a href="https://www.crowdfundinsider.com/2025/07/246668-ethereum-demand-shock-could-significantly-impact-eth-price-movements-analysis/" class="source" target="_blank" rel="noopener">crowdfundinsider.com/2025/07/246668-ethereum-demand-shock</a></li>
+
+        <li id="ref-24"><span class="ref-title">Bitwise Makes First Institutional DeFi Allocation via Maple.</span> Maple Finance Insights, accessed April 2026. The first institutional DeFi allocation by Bitwise Asset Management into Maple Finance's overcollateralized lending pools. <a href="https://maple.finance/insights/bitwise-maple-allocation" class="source" target="_blank" rel="noopener">maple.finance/insights/bitwise-maple-allocation</a> <a href="#cite-24-1" class="ref-back">↩ back</a></li>
+
+        <li id="ref-25"><span class="ref-title">Bitwise Makes First Institutional DeFi Allocation.</span> TradingView / Cointelegraph, accessed April 2026. <a href="https://www.tradingview.com/news/cointelegraph:4c2c741d1094b:0-bitwise-makes-first-institutional-defi-allocation/" class="source" target="_blank" rel="noopener">tradingview.com/news/cointelegraph:4c2c741d1094b</a></li>
+
+        <li id="ref-26"><span class="ref-title">Bitwise Partners with Maple Finance to Give Institutional Clients DeFi and Onchain Credit Investment Opportunities.</span> The Block, accessed April 2026. <a href="https://www.theblock.co/post/344836/bitwise-partners-maple-finance-institutional-clients-defi-credit" class="source" target="_blank" rel="noopener">theblock.co/post/344836/bitwise-partners-maple-finance-institutional-clients-defi-credit</a></li>
+
+        <li id="ref-27"><span class="ref-title">Bitwise Partners with Maple Finance: A Strategic Move in the World of DeFi?</span> Binance Square, accessed April 2026. <a href="https://www.binance.com/en/square/post/21209128908001" class="source" target="_blank" rel="noopener">binance.com/en/square/post/21209128908001</a></li>
+
+        <li id="ref-28"><span class="ref-title">Keeta Network.</span> Official site, accessed April 2026. Layer-1 blockchain processing direct blockchain-to-blockchain transactions with 400ms settlement times and 10M TPS theoretical throughput. <a href="https://keeta.com/" class="source" target="_blank" rel="noopener">keeta.com</a> <a href="#cite-28-1" class="ref-back">↩ back</a></li>
+
+        <li id="ref-29"><span class="ref-title">On Global Governance, Financial/Economic Interests And "Legal Security" In Blockchain Cybersecurity.</span> ResearchGate, accessed April 2026. <a href="https://www.researchgate.net/publication/389627387_On_Global_Governance_FinancialEconomic_Interests_And_Legal_Security_In_Blockchain_Cybersecurity_Under_Regret_WTAL_And_MN-TU_Regimes" class="source" target="_blank" rel="noopener">researchgate.net/publication/389627387</a></li>
+
+        <li id="ref-30"><span class="ref-title">Everything You Know About Payments Is Built on Broken Infrastructure.</span> Keeta Manifesto, accessed April 2026. <a href="https://keeta.com/manifesto" class="source" target="_blank" rel="noopener">keeta.com/manifesto</a></li>
+
+        <li id="ref-31"><span class="ref-title">Latest Keeta News — KTA Future Outlook, Trends &amp; Market Insights.</span> CoinMarketCap, accessed April 2026. <a href="https://coinmarketcap.com/cmc-ai/keeta/latest-updates/" class="source" target="_blank" rel="noopener">coinmarketcap.com/cmc-ai/keeta/latest-updates</a></li>
+
+        <li id="ref-32"><span class="ref-title">Geopolitics, Rates &amp; the Rise of Risk-Managed Lending in DeFi.</span> Galaxy Research, accessed April 2026. <a href="https://www.galaxy.com/insights/perspectives/geopolitics-and-rates-drive-demand-for-risk-managed-lending" class="source" target="_blank" rel="noopener">galaxy.com/insights/perspectives/geopolitics-and-rates-drive-demand-for-risk-managed-lending</a></li>
+
+        <li id="ref-33"><span class="ref-title">Circle IPO and Corporate Crypto Treasuries Signal Stablecoins as the New SWIFT.</span> Cobo, accessed April 2026. <a href="https://www.cobo.com/post/circle-ipo-stablecoins-new-swift" class="source" target="_blank" rel="noopener">cobo.com/post/circle-ipo-stablecoins-new-swift</a></li>
+
+        <li id="ref-34"><span class="ref-title">Endaoment 2026 Company Profile: Valuation, Funding &amp; Investors.</span> PitchBook, accessed April 2026. <a href="https://pitchbook.com/profiles/company/501928-66" class="source" target="_blank" rel="noopener">pitchbook.com/profiles/company/501928-66</a></li>
+
+        <li id="ref-35"><span class="ref-title">Endaoment: Charitable Giving &amp; Donor-Advised Fund Platform.</span> Official site, accessed April 2026. <a href="https://endaoment.org/" class="source" target="_blank" rel="noopener">endaoment.org</a></li>
+
+        <li id="ref-36"><span class="ref-title">Accepting Crypto Donations for Nonprofits: Receive Crypto.</span> Endaoment, accessed April 2026. By late 2025, Endaoment had moved over $135 million in charitable donations on-chain, granting over $80 million to a network of 1.8 million eligible nonprofits. <a href="https://endaoment.org/orgs" class="source" target="_blank" rel="noopener">endaoment.org/orgs</a> <a href="#cite-36-1" class="ref-back">↩ back</a></li>
+
+        <li id="ref-37"><span class="ref-title">Endaoment Impact Overview.</span> Accessed April 2026. <a href="https://impact.endaoment.org/" class="source" target="_blank" rel="noopener">impact.endaoment.org</a></li>
+
+        <li id="ref-38"><span class="ref-title">Donor Advised Fund App: DAFs &amp; Onchain Giving Platform.</span> Endaoment, accessed April 2026. <a href="https://endaoment.org/donors" class="source" target="_blank" rel="noopener">endaoment.org/donors</a></li>
+
+        <li id="ref-39"><span class="ref-title">Recommend Grants — Endaoment Documentation.</span> Accessed April 2026. <a href="https://docs.endaoment.org/donors/getting-started/recommending-grants" class="source" target="_blank" rel="noopener">docs.endaoment.org/donors/getting-started/recommending-grants</a></li>
+
+        <li id="ref-40"><span class="ref-title">Our Donations: Funding Public Goods.</span> Glo Dollar, accessed April 2026. <a href="https://www.glodollar.org/articles/donations" class="source" target="_blank" rel="noopener">glodollar.org/articles/donations</a></li>
+
+        <li id="ref-41"><span class="ref-title">Building a Dynamic Fundraising Strategy and Providing Fiscal Sponsorship for The Glo Development Foundation.</span> Global Impact Charity, accessed April 2026. Background on Glo Dollar's fiscal sponsorship and operating model. <a href="https://charity.org/case-study/building-a-dynamic-fundraising-strategy-and-providing-fiscal-sponsorship-for-glo-dollar-the-ethical-stablecoin/" class="source" target="_blank" rel="noopener">charity.org/case-study/building-a-dynamic-fundraising-strategy-and-providing-fiscal-sponsorship-for-glo-dollar</a> <a href="#cite-41-1" class="ref-back">↩ back</a></li>
+
+        <li id="ref-42"><span class="ref-title">Glo Dollar, an Ethical Stablecoin: Model, Potential Impact, and Roadmap.</span> Effective Altruism Forum, accessed April 2026. Mathematical analysis showing that an $84B Glo Dollar market cap would generate over $2B in annual yield, potentially lifting four million people out of extreme poverty. <a href="https://forum.effectivealtruism.org/posts/EAiwxZN4Jiyup8d9G/glo-dollar-an-ethical-stablecoin-model-potential-impact-and" class="source" target="_blank" rel="noopener">forum.effectivealtruism.org/posts/EAiwxZN4Jiyup8d9G</a> <a href="#cite-42-1" class="ref-back">↩ back</a></li>
+
+        <li id="ref-43"><span class="ref-title">Glo Dollar — The Stablecoin That Funds Public Goods.</span> Official site, accessed April 2026. <a href="https://www.glodollar.org/" class="source" target="_blank" rel="noopener">glodollar.org</a></li>
+
+        <li id="ref-44"><span class="ref-title">Testing Novel Ways to Increase Our Cost-Effectiveness with GiveWell.</span> GiveDirectly, accessed April 2026. <a href="https://www.givedirectly.org/givewell2026/" class="source" target="_blank" rel="noopener">givedirectly.org/givewell2026</a></li>
+
+        <li id="ref-45"><span class="ref-title">Switching to More Cash Aid Would Help Millions in 2025.</span> GiveDirectly, accessed April 2026. <a href="https://www.givedirectly.org/switch-to-cash" class="source" target="_blank" rel="noopener">givedirectly.org/switch-to-cash</a></li>
+
+        <li id="ref-46"><span class="ref-title">AI Summer 2026: Will Artificial Intelligence Replicate DeFi's Explosive Growth?</span> KuCoin Blog, accessed April 2026. <a href="https://www.kucoin.com/blog/ai-summer" class="source" target="_blank" rel="noopener">kucoin.com/blog/ai-summer</a></li>
+
+        <li id="ref-47"><span class="ref-title">Agentic AI Foundation Announces Global 2026 Events Program.</span> Linux Foundation, accessed April 2026. The Model Context Protocol (MCP), created by Anthropic and stewarded by the Agentic AI Foundation. <a href="https://www.linuxfoundation.org/press/agentic-ai-foundation-announces-global-2026-events-program-anchored-by-agntcon-mcpcon-north-america-and-europe" class="source" target="_blank" rel="noopener">linuxfoundation.org/press/agentic-ai-foundation-announces-global-2026-events-program</a> <a href="#cite-47-1" class="ref-back">↩ back</a></li>
+
+        <li id="ref-48"><span class="ref-title">MCP vs A2A: The Complete Guide to AI Agent Protocols in 2026.</span> DEV Community, accessed April 2026. <a href="https://dev.to/pockit_tools/mcp-vs-a2a-the-complete-guide-to-ai-agent-protocols-in-2026-30li" class="source" target="_blank" rel="noopener">dev.to/pockit_tools/mcp-vs-a2a-the-complete-guide-to-ai-agent-protocols-in-2026-30li</a></li>
+
+        <li id="ref-49"><span class="ref-title">Donating the Model Context Protocol and Establishing the Agentic AI Foundation.</span> Anthropic, accessed April 2026. <a href="https://www.anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation" class="source" target="_blank" rel="noopener">anthropic.com/news/donating-the-model-context-protocol-and-establishing-of-the-agentic-ai-foundation</a></li>
+
+        <li id="ref-50"><span class="ref-title">MCP Use Cases: Real-World Applications &amp; Business Impact.</span> Goodcall, accessed April 2026. <a href="https://www.goodcall.com/voice-ai/model-context-protocol-use-cases" class="source" target="_blank" rel="noopener">goodcall.com/voice-ai/model-context-protocol-use-cases</a></li>
+
+        <li id="ref-51"><span class="ref-title">Crypto AI Agents in 2026: How Autonomous Models Use Blockchain, DeFi, and On-Chain Wallets.</span> Coincub, accessed April 2026. Discussion of ERC-4337 and EIP-7702 account abstraction standards enabling autonomous AI agent transactions. <a href="https://coincub.com/blog/crypto-ai-agents/" class="source" target="_blank" rel="noopener">coincub.com/blog/crypto-ai-agents</a> <a href="#cite-51-1" class="ref-back">↩ back</a></li>
+
+        <li id="ref-52"><span class="ref-title">AI Agent Skills in Crypto: How AI Agents Are Transforming Web3.</span> Cobo, accessed April 2026. <a href="https://www.cobo.com/post/agentic-ai-crypto-guide" class="source" target="_blank" rel="noopener">cobo.com/post/agentic-ai-crypto-guide</a></li>
+
+        <li id="ref-53"><span class="ref-title">Securing Model Context Protocol (MCP).</span> 42 Crunch, accessed April 2026. <a href="https://42crunch.com/securing-model-context-protocol-mcp/" class="source" target="_blank" rel="noopener">42crunch.com/securing-model-context-protocol-mcp</a></li>
+
+        <li id="ref-54"><span class="ref-title">AI in Blockchain in 2026: Agents, On-Chain Inference, and Tokenized Ownership.</span> Blockchain Council, accessed April 2026. <a href="https://www.blockchain-council.org/blockchain/ai-in-blockchain/" class="source" target="_blank" rel="noopener">blockchain-council.org/blockchain/ai-in-blockchain</a></li>
+
+        <li id="ref-55"><span class="ref-title">Crypto Altruists Starter Pack — Stablecoins for Good.</span> Crypto Altruists, accessed April 2026. <a href="https://www.cryptoaltruists.com/blog/crypto-altruists-starter-pack-stablecoins-for-good" class="source" target="_blank" rel="noopener">cryptoaltruists.com/blog/crypto-altruists-starter-pack-stablecoins-for-good</a></li>
+
+        <li id="ref-56"><span class="ref-title">Quadratic Funding Powered Social Network.</span> Gitcoin, accessed April 2026. <a href="https://gitcoin.co/mechanisms/quadratic-funding-powered-social-network" class="source" target="_blank" rel="noopener">gitcoin.co/mechanisms/quadratic-funding-powered-social-network</a></li>
+
+        <li id="ref-57"><span class="ref-title">SEC Chairman Atkins Addresses SEC's Next Steps in Regulation of Digital Assets.</span> Paul, Weiss, accessed April 2026. Analysis of Chairman Paul S. Atkins' November 12, 2025 speech at the Federal Reserve Bank of Philadelphia. <a href="https://www.paulweiss.com/media/lpxlrth0/sec_chairman_atkins_addresses_secs_next_steps_in_regulation_of_digital_assets.pdf" class="source" target="_blank" rel="noopener">paulweiss.com/media/lpxlrth0/sec_chairman_atkins_addresses_secs_next_steps_in_regulation_of_digital_assets.pdf</a> <a href="#cite-57-1" class="ref-back">↩ back</a></li>
+
+        <li id="ref-58"><span class="ref-title">The SEC's Approach to Digital Assets: Inside "Project Crypto."</span> SEC.gov, accessed April 2026. Full text of Chairman Atkins' speech outlining the new four-category token taxonomy. <a href="https://www.sec.gov/newsroom/speeches-statements/atkins-111225-secs-approach-digital-assets-inside-project-crypto" class="source" target="_blank" rel="noopener">sec.gov/newsroom/speeches-statements/atkins-111225-secs-approach-digital-assets-inside-project-crypto</a> <a href="#cite-58-1" class="ref-back">↩ back</a></li>
+
+        <li id="ref-59"><span class="ref-title">Securities on a Sliding Scale: Inside "Project Crypto's" New Approach to Digital Assets.</span> Jones Day, accessed April 2026. <a href="https://www.jonesday.com/en/insights/2025/11/securities-on-a-sliding-scale-inside-project-cryptos-new-approach-to-digital-assets" class="source" target="_blank" rel="noopener">jonesday.com/en/insights/2025/11/securities-on-a-sliding-scale-inside-project-cryptos-new-approach-to-digital-assets</a></li>
+
+        <li id="ref-60"><span class="ref-title">SEC Chairman Atkins Signals Major Shift: Potential Token Taxonomy and Evolving Application of Howey Test to Crypto Assets.</span> Winston &amp; Strawn, accessed April 2026. <a href="https://www.winston.com/en/blogs-and-podcasts/capital-markets-and-securities-law-watch/sec-chairman-atkins-signals-major-shift-potential-token-taxonomy-and-evolving-application-of-howey-test-to-crypto-assets" class="source" target="_blank" rel="noopener">winston.com/en/blogs-and-podcasts/capital-markets-and-securities-law-watch</a></li>
+
+        <li id="ref-61"><span class="ref-title">SEC Releases Landmark Interpretation on Application of U.S. Securities Laws to Crypto Assets, in Coordination With CFTC.</span> Sidley, accessed April 2026. <a href="https://www.sidley.com/en/insights/newsupdates/2026/03/sec-releases-landmark-interpretation-on-application-of-us-securities-laws-to-crypto-assets" class="source" target="_blank" rel="noopener">sidley.com/en/insights/newsupdates/2026/03</a></li>
+
+        <li id="ref-62"><span class="ref-title">SEC and CFTC Issue Coordinated Crypto Asset Classification.</span> Alston &amp; Bird, accessed April 2026. <a href="https://www.alston.com/en/insights/publications/2026/04/sec-cftc-coordinated-crypto-classification" class="source" target="_blank" rel="noopener">alston.com/en/insights/publications/2026/04/sec-cftc-coordinated-crypto-classification</a></li>
+
+        <li id="ref-63"><span class="ref-title">SEC's "Project Crypto" — Chairman Atkins Outlines Regulatory Vision.</span> Cooley Investigations, accessed April 2026. <a href="https://investigations.cooley.com/2025/11/24/secs-project-crypto-chairman-atkins-outlines-regulatory-vision/" class="source" target="_blank" rel="noopener">investigations.cooley.com/2025/11/24/secs-project-crypto-chairman-atkins-outlines-regulatory-vision</a></li>
+
+        <li id="ref-64"><span class="ref-title">Atkins Delivers Remarks on Digital Assets Approach.</span> Mutual Fund Directors Forum, accessed April 2026. <a href="https://www.mfdf.org/news-resources/news/2025/12/11/atkins-delivers-remarks-on-digital-assets-approach" class="source" target="_blank" rel="noopener">mfdf.org/news-resources/news/2025/12/11/atkins-delivers-remarks-on-digital-assets-approach</a></li>
+
+        <li id="ref-65"><span class="ref-title">SEC Chairman Atkins Outlines Priorities Under "Project Crypto."</span> Morrison Foerster, accessed April 2026. <a href="https://www.mofo.com/resources/insights/251119-sec-chairman-atkins-speech-on-project-crypto" class="source" target="_blank" rel="noopener">mofo.com/resources/insights/251119-sec-chairman-atkins-speech-on-project-crypto</a></li>
+
+        <li id="ref-66"><span class="ref-title">Build a Successful Investment Policy Statement for Your Nonprofit.</span> Northern Trust White Paper, accessed April 2026. Foundational guidance on IPS modernization under the Uniform Prudent Management of Institutional Funds Act. <a href="https://www.northerntrust.com/content/dam/northerntrust/pws/nt/documents/white-papers/wealth-management/build-a-successful-investment-policy-statement-for-your-nonprofit.pdf" class="source" target="_blank" rel="noopener">northerntrust.com/content/dam/northerntrust/pws/nt/documents/white-papers/wealth-management/build-a-successful-investment-policy-statement-for-your-nonprofit.pdf</a> <a href="#cite-66-1" class="ref-back">↩ back</a></li>
+
+        <li id="ref-67"><span class="ref-title">Investment Policy Statements for Nonprofit Organizations.</span> California Association of Boards of Education, accessed April 2026. <a href="http://www.gocabe.org/wp-content/uploads/board/1115/5.2IPSforNonProfits.pdf" class="source" target="_blank" rel="noopener">gocabe.org/wp-content/uploads/board/1115/5.2IPSforNonProfits.pdf</a></li>
+      </ol>
     </section>
 
   </main>
@@ -1015,6 +1264,25 @@
   });
 
   sections.forEach(s => observer.observe(s));
+
+  // Citation highlighting — flash the targeted reference when a sup is clicked
+  document.querySelectorAll('sup a[data-ref]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const refNum = link.dataset.ref;
+      const target = document.getElementById('ref-' + refNum);
+      if (!target) return;
+      // Remove highlight from all refs first
+      document.querySelectorAll('ol.refs li.highlight').forEach(li => li.classList.remove('highlight'));
+      // Add highlight after a tick so the scroll completes
+      setTimeout(() => target.classList.add('highlight'), 350);
+    });
+  });
+
+  // Also highlight on direct hash-link load (e.g. shared URL with #ref-13)
+  if (window.location.hash && window.location.hash.startsWith('#ref-')) {
+    const target = document.querySelector(window.location.hash);
+    if (target) setTimeout(() => target.classList.add('highlight'), 400);
+  }
 </script>
 
 </body>
