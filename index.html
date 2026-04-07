@@ -1109,8 +1109,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         formData.append('Email', input.value);
         formData.append('Track', form.dataset.track);
 
-        // Send to Google Sheets
-        fetch(scriptURL, { method: 'POST', body: formData })
+      // Send to Google Sheets
+        fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
           .then(response => {
             // Hide input UI and show success message
             row.style.display = 'none';
