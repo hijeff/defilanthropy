@@ -1086,19 +1086,42 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </footer>
 
 <script>
+  // Replace this with your actual Google Apps Script Web App URL
+  const scriptURL = 'YOUR_WEB_APP_URL_HERE';
+
   document.querySelectorAll('.signup-form').forEach(form => {
     form.addEventListener('submit', function(e) {
       e.preventDefault();
+      
       const input = form.querySelector('input');
       const row = form.querySelector('.form-input-row');
       const note = form.querySelector('.form-note');
       const success = form.querySelector('.form-success');
+      const submitBtn = form.querySelector('button');
+      
       if (input.value) {
-        row.style.display = 'none';
-        note.style.display = 'none';
-        success.style.display = 'block';
-        // TODO: wire to Formspree or Buttondown with form.dataset.track
-        console.log('Signup [' + form.dataset.track + ']:', input.value);
+        // Change button text to show loading state
+        const originalBtnText = submitBtn.innerHTML;
+        submitBtn.innerHTML = 'Sending...';
+        
+        // Prepare data to match your Google Sheet headers
+        const formData = new FormData();
+        formData.append('Email', input.value);
+        formData.append('Track', form.dataset.track);
+
+        // Send to Google Sheets
+        fetch(scriptURL, { method: 'POST', body: formData })
+          .then(response => {
+            // Hide input UI and show success message
+            row.style.display = 'none';
+            note.style.display = 'none';
+            success.style.display = 'block';
+          })
+          .catch(error => {
+            console.error('Error!', error.message);
+            submitBtn.innerHTML = originalBtnText; // Revert button if error
+            alert('Something went wrong. Please try again.');
+          });
       }
     });
   });
