@@ -604,23 +604,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     margin-bottom: 4rem;
   }
 
-  .tracks {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-  }
-
-  .track {
+  /* SIGNUP CARD */
+  .signup-card {
     background: var(--ink-card);
     border: 1px solid var(--rule);
-    padding: 2.5rem;
+    padding: 3rem;
     border-radius: 2px;
+    max-width: 38rem;
     transition: border-color 0.3s ease;
   }
 
-  .track:focus-within { border-color: var(--accent); }
+  .signup-card:focus-within { border-color: var(--accent); }
 
-  .track-label {
+  .signup-card-label {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.68rem;
     color: var(--accent);
@@ -629,31 +625,31 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     margin-bottom: 1rem;
   }
 
-  .track h3 {
+  .signup-card h3 {
     font-family: 'Fraunces', serif;
-    font-size: 1.75rem;
+    font-size: 1.85rem;
     font-weight: 400;
     letter-spacing: -0.02em;
     line-height: 1.15;
     margin-bottom: 1rem;
   }
 
-  .track h3 em { font-style: italic; color: var(--cream-dim); }
+  .signup-card h3 em { font-style: italic; color: var(--cream-dim); }
 
-  .track p {
-    font-size: 0.92rem;
+  .signup-card p.signup-card-body {
+    font-size: 0.95rem;
     color: var(--cream-dim);
     line-height: 1.6;
     margin-bottom: 2rem;
-    min-height: 6rem;
   }
 
+  /* FORM FIELDS */
   .form-input-row {
     display: flex;
     border-bottom: 1px solid var(--cream-dim);
     padding-bottom: 0.5rem;
     transition: border-color 0.3s ease;
-    margin-bottom: 0.75rem;
+    margin-bottom: 1rem;
   }
 
   .form-input-row:focus-within { border-color: var(--accent); }
@@ -661,35 +657,112 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .form-input-row input {
     flex: 1;
     background: transparent;
+    background-color: transparent;
     border: none;
+    border-radius: 0;
     outline: none;
+    box-shadow: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     color: var(--cream);
-    font-family: 'Fraunces', serif;
+    font-family: 'Fraunces', Georgia, serif;
     font-size: 1.1rem;
     font-weight: 300;
     padding: 0.5rem 0;
+    margin: 0;
     min-width: 0;
   }
 
-  .form-input-row input::placeholder { color: var(--muted); font-style: italic; }
+  .form-input-row input::placeholder {
+    color: var(--muted);
+    font-style: italic;
+    font-family: 'Fraunces', Georgia, serif;
+  }
 
-  .form-input-row button {
+  .form-textarea-row {
+    border-bottom: 1px solid var(--cream-dim);
+    padding-bottom: 0.5rem;
+    transition: border-color 0.3s ease;
+    margin-bottom: 0.4rem;
+  }
+
+  .form-textarea-row:focus-within { border-color: var(--accent); }
+
+  .form-textarea-row textarea {
+    width: 100%;
     background: transparent;
+    background-color: transparent;
     border: none;
-    color: var(--accent);
+    border-radius: 0;
+    outline: none;
+    box-shadow: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    color: var(--cream);
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    padding: 0.5rem 0;
+    margin: 0;
+    resize: none;
+    min-height: 3.2rem;
+    line-height: 1.4;
+    display: block;
+  }
+
+  .form-textarea-row textarea:focus {
+    outline: none;
+    box-shadow: none;
+    border: none;
+  }
+
+  .form-textarea-row textarea::placeholder {
+    color: var(--muted);
+    font-style: italic;
+    font-family: 'Fraunces', Georgia, serif;
+  }
+
+  .char-counter {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    text-align: right;
+    margin-bottom: 1.25rem;
+  }
+
+  .char-counter.over { color: var(--accent); }
+
+  .form-submit-full {
+    background: var(--accent);
+    color: var(--ink);
+    border: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    padding: 0.95rem 1rem;
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.72rem;
+    font-weight: 500;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     cursor: pointer;
-    padding: 0 0.5rem 0 1rem;
     transition: all 0.3s ease;
-    white-space: nowrap;
+    border-radius: 1px;
+    margin-top: 0.5rem;
+    margin-bottom: 0.75rem;
   }
 
-  .form-input-row button:hover {
-    color: var(--accent-bright);
-    transform: translateX(3px);
+  .form-submit-full:hover {
+    background: var(--accent-bright);
+  }
+
+  .form-submit-full:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
   }
 
   .form-note {
@@ -704,7 +777,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     font-family: 'Fraunces', serif;
     font-style: italic;
     color: var(--accent);
-    font-size: 1rem;
+    font-size: 1.1rem;
     display: none;
     padding: 0.5rem 0;
   }
@@ -796,8 +869,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       border-right: none;
     }
     .trust-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-    .tracks { grid-template-columns: 1fr; gap: 1.5rem; }
-    .track p { min-height: auto; }
   }
 
   @media (max-width: 700px) {
@@ -825,7 +896,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       align-items: flex-start;
     }
 
-    .track { padding: 2rem 1.5rem; }
+    .signup-card { padding: 2rem 1.5rem; }
   }
 </style>
 </head>
@@ -1033,7 +1104,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 </section>
 
-
 <!-- SIGNUP -->
 <section class="signup-section" id="help">
   <div class="signup-inner">
@@ -1043,7 +1113,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p class="signup-sub">
       Defilanthropy is a thesis we want to stress-test in public. Whether you're a nonprofit finance team that wants to be first when there's something to pilot, a lawyer who wants to unravel the yield-donation question, a VC who wants to pressure-test the model, a builder who's done this before, a policy thinker, or a thoughtful skeptic &mdash; we want to hear from you. Introduce yourself below.
     </p>
- 
+
     <div class="signup-card">
       <div class="signup-card-label">Get involved</div>
       <h3>Introduce yourself<br><em>and say hello</em></h3>
@@ -1058,7 +1128,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <input type="email" name="email" placeholder="your email" required>
         </div>
         <div class="form-textarea-row">
-          <textarea name="message" placeholder="a short message (under 100 characters)" maxlength="100" required rows="2"></textarea>
+          <textarea name="message" placeholder="a short message (under 100 characters)" maxlength="100" required rows="2" spellcheck="false"></textarea>
         </div>
         <div class="char-counter"><span class="char-count">0</span> / 100</div>
         <button type="submit" class="form-submit-full">Send →</button>
@@ -1091,40 +1161,64 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </footer>
 
 <script>
-  // Replace this with your actual Google Apps Script Web App URL
+  // Google Apps Script Web App URL
   const scriptURL = 'https://script.google.com/macros/s/AKfycbwBCp2ar0OY5Sma7twgyF4Twpuou3XqresqtlPCJqzlIFgffqtLb6V2Uk8iqJ-M_tddyw/exec';
 
   document.querySelectorAll('.signup-form').forEach(form => {
+    const textarea = form.querySelector('textarea[name="message"]');
+    const counter = form.querySelector('.char-count');
+    const counterWrap = form.querySelector('.char-counter');
+
+    // Live character counter
+    if (textarea && counter) {
+      textarea.addEventListener('input', () => {
+        const len = textarea.value.length;
+        counter.textContent = len;
+        if (len >= 100) {
+          counterWrap.classList.add('over');
+        } else {
+          counterWrap.classList.remove('over');
+        }
+      });
+    }
+
     form.addEventListener('submit', function(e) {
       e.preventDefault();
-      
-      const input = form.querySelector('input');
-      const row = form.querySelector('.form-input-row');
+
+      const nameInput = form.querySelector('input[name="name"]');
+      const emailInput = form.querySelector('input[name="email"]');
+      const messageInput = form.querySelector('textarea[name="message"]');
+      const submitBtn = form.querySelector('button[type="submit"]');
       const note = form.querySelector('.form-note');
       const success = form.querySelector('.form-success');
-      const submitBtn = form.querySelector('button');
-      
-      if (input.value) {
-        // Change button text to show loading state
+
+      if (nameInput.value && emailInput.value && messageInput.value) {
+        // Loading state
         const originalBtnText = submitBtn.innerHTML;
         submitBtn.innerHTML = 'Sending...';
-        
-        // Prepare data to match your Google Sheet headers
+        submitBtn.disabled = true;
+
+        // Send Name, Email, Message, and Track to Google Sheet
         const formData = new FormData();
-        formData.append('Email', input.value);
+        formData.append('Name', nameInput.value);
+        formData.append('Email', emailInput.value);
+        formData.append('Message', messageInput.value);
         formData.append('Track', form.dataset.track);
 
-      // Send to Google Sheets
         fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
           .then(response => {
-            // Hide input UI and show success message
-            row.style.display = 'none';
-            note.style.display = 'none';
+            // Hide form fields, show success message
+            form.querySelectorAll('.form-input-row, .form-textarea-row, .char-counter').forEach(el => {
+              el.style.display = 'none';
+            });
+            submitBtn.style.display = 'none';
+            if (note) note.style.display = 'none';
             success.style.display = 'block';
           })
           .catch(error => {
             console.error('Error!', error.message);
-            submitBtn.innerHTML = originalBtnText; // Revert button if error
+            submitBtn.innerHTML = originalBtnText;
+            submitBtn.disabled = false;
             alert('Something went wrong. Please try again.');
           });
       }
